@@ -199,20 +199,6 @@ export default function PongComponent() {
       state.windowWidth * (3 / 4),
       50,
     );
-
-    // title & menu back text
-    p5.textSize(50);
-    p5.text(
-      'IvoPong',
-      (state.windowWidth - state.paddleWidth) / 2 - 100,
-      state.windowHeight - 40,
-    );
-    p5.textSize(20);
-    p5.text(
-      'ESC to Menu',
-      (state.windowWidth - state.paddleWidth) / 2 - 62,
-      state.windowHeight - 20,
-    );
   };
 
   //p5 event on key press
