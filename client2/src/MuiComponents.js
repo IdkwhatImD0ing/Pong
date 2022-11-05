@@ -1,24 +1,9 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-// import Paper from '@mui/material/Paper'
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import {AppBar, Box, Toolbar, Typography, Button, Card, CardActions, CardContent, CardMedia, TextField, Stack, Popper, Fade} from '@mui/material';
 import JoinRightIcon from '@mui/icons-material/JoinRight';
-
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-
-import TextField from '@mui/material/TextField';
 import CheckIcon from '@mui/icons-material/Check';
-import Stack from '@mui/material/Stack';
 
 import { UserContext } from './App.js';
-
-
 
 function WelcomePrompt() {
   const [temp, setTemp] = React.useState(null);
@@ -101,9 +86,27 @@ function CardPlayOnline() {
 }
 
 function PongAppBar() {
+  const [open, setOpen] = React.useState(false);
+  const [temp, setTemp] = React.useState(null);
+
+  const divRef = React.useRef();
+
+  const toggleOpen = () => {
+    setOpen(open ? false : true);
+  }
+  const fieldChange = (e) => {
+    e.preventDefault();
+    setTemp(e.target.value);
+  }
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  React.useEffect(() => {
+    setAnchorEl(divRef.current);
+  }, [divRef]);
+
   return (
     <UserContext.Consumer>
-      {({name}) => (
+      {({name, setName}) => (
         <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" >
           <Toolbar sx={{justifyContent: 'space-between'}}>
@@ -112,12 +115,34 @@ function PongAppBar() {
               <JoinRightIcon />
             </Typography>
             <div />
-            <Button color="inherit"
+            <Button color="inherit" ref={divRef}
+            onClick={toggleOpen}
             sx={{textTransform: 'none'}}>
               <Typography variant="h6" component="div">
                 {name}
               </Typography>
             </Button>
+            {/* Popper here to change name */}
+            <Popper placement='bottom' anchorEl={anchorEl} open={open} transition>
+              {({ TransitionProps }) => (
+                <Fade {...TransitionProps}>
+                  <Box sx={{bgcolor: 'background.paper'}}>
+                    <Stack direction={'row'}>
+                      <TextField label="Change username" variant="outlined"
+                      onChange={fieldChange}/>
+                      <Button onClick={() => {
+                          setName(temp);
+                          toggleOpen();
+                        }
+                      }>
+                        Done
+                        <CheckIcon />
+                      </Button>
+                    </Stack>
+                  </Box>
+                </Fade>
+              )}
+            </Popper>
           </Toolbar>
         </AppBar>
         </Box>
