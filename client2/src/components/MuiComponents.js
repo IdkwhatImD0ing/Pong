@@ -6,6 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import JoinRightIcon from '@mui/icons-material/JoinRight';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -44,7 +45,7 @@ function JoinPrompt() {
             onChange={fieldChange}/>
             <Button onClick={() => {setRoom(temp)}}>
               Join
-              <CheckIcon />
+              <PlayArrowIcon/>
             </Button>
           </Stack>
         </Stack>
