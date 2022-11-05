@@ -18,7 +18,40 @@ import Stack from '@mui/material/Stack';
 import Popper from '@mui/material/Popper';
 import Fade from '@mui/material/Fade';
 
-import { UserContext } from '../App.js';
+import { UserContext, RoomContext } from '../App.js';
+
+function JoinPrompt() {
+  const [temp, setTemp] = React.useState(null);
+  
+  const fieldChange = (e) => {
+    e.preventDefault();
+    setTemp(e.target.value);
+  }
+
+  return (
+    <RoomContext.Consumer>
+      {({setRoom}) => (
+        <Stack 
+        direction='row'
+        justifyContent='center' 
+        alignItems='center'
+        spacing={2}>
+          <Typography variant="h6">
+                Trying to join a room?
+          </Typography>
+          <Stack direction={'row'}>
+            <TextField label="Room code" variant="outlined"
+            onChange={fieldChange}/>
+            <Button onClick={() => {setRoom(temp)}}>
+              Join
+              <CheckIcon />
+            </Button>
+          </Stack>
+        </Stack>
+      )}
+    </RoomContext.Consumer>
+  );
+}
 
 function WelcomePrompt() {
   const [temp, setTemp] = React.useState(null);
@@ -94,7 +127,6 @@ function CardPlayOnline() {
       </CardContent>
       <CardActions sx={{display: 'flex', justifyContent: 'center'}}>
         <Button size="small">Create Game</Button>
-        <Button size="small">Join Game</Button>
       </CardActions>
     </Card>
   );
@@ -168,4 +200,4 @@ function PongAppBar() {
   );
 }
 
-export {PongAppBar, CardPlayLocal, CardPlayOnline, WelcomePrompt};
+export {PongAppBar, CardPlayLocal, CardPlayOnline, WelcomePrompt, JoinPrompt};
