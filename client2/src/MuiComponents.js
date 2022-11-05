@@ -15,10 +15,10 @@ import CardMedia from '@mui/material/CardMedia';
 import TextField from '@mui/material/TextField';
 import CheckIcon from '@mui/icons-material/Check';
 import Stack from '@mui/material/Stack';
+import Popper from '@mui/material/Popper';
+import Fade from '@mui/material/Fade';
 
 import { UserContext } from './App.js';
-
-
 
 function WelcomePrompt() {
   const [temp, setTemp] = React.useState(null);
@@ -101,9 +101,27 @@ function CardPlayOnline() {
 }
 
 function PongAppBar() {
+  const [open, setOpen] = React.useState(false);
+  const [temp, setTemp] = React.useState(null);
+
+  const divRef = React.useRef();
+
+  const toggleOpen = () => {
+    setOpen(open ? false : true);
+  }
+  const fieldChange = (e) => {
+    e.preventDefault();
+    setTemp(e.target.value);
+  }
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  React.useEffect(() => {
+    setAnchorEl(divRef.current);
+  }, [divRef]);
+
   return (
     <UserContext.Consumer>
-      {({name}) => (
+      {({name, setName}) => (
         <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" >
           <Toolbar sx={{justifyContent: 'space-between'}}>
@@ -112,12 +130,34 @@ function PongAppBar() {
               <JoinRightIcon />
             </Typography>
             <div />
-            <Button color="inherit"
+            <Button color="inherit" ref={divRef}
+            onClick={toggleOpen}
             sx={{textTransform: 'none'}}>
               <Typography variant="h6" component="div">
                 {name}
               </Typography>
             </Button>
+            {/* Popper here to change name */}
+            <Popper placement='bottom' anchorEl={anchorEl} open={open} transition>
+              {({ TransitionProps }) => (
+                <Fade {...TransitionProps}>
+                  <Box sx={{bgcolor: 'background.paper'}}>
+                    <Stack direction={'row'}>
+                      <TextField label="Change username" variant="outlined"
+                      onChange={fieldChange}/>
+                      <Button onClick={() => {
+                          setName(temp);
+                          toggleOpen();
+                        }
+                      }>
+                        Done
+                        <CheckIcon />
+                      </Button>
+                    </Stack>
+                  </Box>
+                </Fade>
+              )}
+            </Popper>
           </Toolbar>
         </AppBar>
         </Box>
