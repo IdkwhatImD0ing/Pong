@@ -161,27 +161,34 @@ export default function PongComponent() {
       state.yBallSpeed *= -1;
     }
   };
-  const moveBallDuringRightServe = (moveBallDuringRightServe) => {
-    if (moveBallDuringRightServe) {
-      state.xBall = state.xPaddleRight - state.diameter / 2;
-      state.yBall = state.yPaddleRight + 0.5 * state.paddleHeight;
+  const moveBallDuringRightServe = (tempState) => {
+    if (tempState.rightServe) {
+      tempState.xBall = tempState.xPaddleRight - tempState.diameter / 2;
+      tempState.yBall = tempState.yPaddleRight + 0.5 * tempState.paddleHeight;
     }
   };
 
-  const moveBallDuringLeftServe = (moveBallDuringLeftServe) => {
-    if (moveBallDuringLeftServe) {
-      state.xBall = state.xPaddleLeft + state.paddleWidth + state.diameter / 2;
-      state.yBall = state.yPaddleLeft + 0.5 * state.paddleHeight;
+  const moveBallDuringLeftServe = (tempState) => {
+    if (tempState.leftServe) {
+      tempState.xBall =
+        tempState.xPaddleLeft + tempState.paddleWidth + tempState.diameter / 2;
+      tempState.yBall = tempState.yPaddleLeft + 0.5 * tempState.paddleHeight;
     }
   };
 
-  const boundToWindow = () => {
-    if (state.yPaddleLeft <= 0) state.yPaddleLeft = 0;
-    if (state.yPaddleLeft + state.paddleHeight >= state.windowHeight)
-      state.yPaddleLeft = state.windowHeight - state.paddleHeight;
-    if (state.yPaddleRight <= 0) state.yPaddleRight = 0;
-    if (state.yPaddleRight + state.paddleHeight >= state.windowHeight)
-      state.yPaddleRight = state.windowHeight - state.paddleHeight;
+  const boundToWindow = (tempState) => {
+    if (tempState.yPaddleLeft <= 0) tempState.yPaddleLeft = 0;
+    if (
+      tempState.yPaddleLeft + tempState.paddleHeight >=
+      tempState.windowHeight
+    )
+      tempState.yPaddleLeft = tempState.windowHeight - tempState.paddleHeight;
+    if (tempState.yPaddleRight <= 0) tempState.yPaddleRight = 0;
+    if (
+      tempState.yPaddleRight + tempState.paddleHeight >=
+      tempState.windowHeight
+    )
+      tempState.yPaddleRight = tempState.windowHeight - tempState.paddleHeight;
   };
 
   const drawStaticItems = (p5) => {
@@ -216,7 +223,7 @@ export default function PongComponent() {
     const tempState = structuredClone(state);
     // esc to menu
     if (e.keyCode === ESC) {
-      state.setState({goToMenu: true});
+      //state.setState({goToMenu: true}); TODO
     }
     if (e.keyCode === SPACEBAR) {
       // space
@@ -245,9 +252,10 @@ export default function PongComponent() {
       tempState.yPaddleLeft += tempState.paddleStep;
     }
 
-    moveBallDuringLeftServe(state.leftServe);
-    moveBallDuringRightServe(state.rightServe);
-    boundToWindow();
+    moveBallDuringLeftServe(tempState);
+    moveBallDuringRightServe(tempState);
+    boundToWindow(tempState);
+    setState(tempState);
   };
 
   return <Sketch setup={setup} draw={draw} keyPressed={keyPressed} />;
