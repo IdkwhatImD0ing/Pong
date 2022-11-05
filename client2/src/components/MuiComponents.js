@@ -1,10 +1,5 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-// import Paper from '@mui/material/Paper'
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import {AppBar, Box, Toolbar, Typography, Button, Card, CardActions, CardContent, CardMedia, TextField, Stack, Popper, Fade} from '@mui/material';
 import JoinRightIcon from '@mui/icons-material/JoinRight';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
