@@ -1,9 +1,9 @@
-import * as React from 'react'
+import * as React from 'react';
 import './App.css';
-import * as MuiComponents from './MuiComponents.js'
-import { Box } from '@mui/material'
+import * as MuiComponents from './MuiComponents.js';
+import {Box} from '@mui/material';
 // import { Typography } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import {ThemeProvider, createTheme} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
 const darkTheme = createTheme({
@@ -15,7 +15,7 @@ const darkTheme = createTheme({
 const UserContext = React.createContext();
 
 function App() {
-  const [name, setName] = React.useState(null);
+  const [name, setName] = React.useState('Mark');
   return (
     <div className="App">
       <ThemeProvider theme={darkTheme}>

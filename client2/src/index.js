@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Game from './Game';
 import reportWebVitals from './reportWebVitals';
 import App from './App.js';
+import Game from './Game';
 // import PongComponent from './Pong';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

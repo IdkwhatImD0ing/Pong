@@ -23,126 +23,136 @@ export default function PongComponent() {
 
   //p5 Canvas Re-draw method
   const draw = (p5) => {
+    let tempState = structuredClone(state);
     p5.background(0, 0, 0);
 
     // global pause - when not started or serve in progress
-    if (state.started) {
-      state.xBall += state.xBallSpeed;
-      state.yBall += state.yBallSpeed;
+    if (tempState.started) {
+      tempState.xBall += tempState.xBallSpeed;
+      tempState.yBall += tempState.yBallSpeed;
     }
 
     // Detect collision with left paddle
     // if hit with upper half of paddle, redirect up, if lower half, redirect down
     if (
-      state.xBall <=
+      tempState.xBall <=
         0 +
-          state.xPaddleLeft +
-          state.paddleWidth +
-          state.borderOffset +
-          state.diameter / 2 &&
-      state.yBall < state.yPaddleLeft + state.paddleHeight &&
-      state.yBall >= state.yPaddleLeft
+          tempState.xPaddleLeft +
+          tempState.paddleWidth +
+          tempState.borderOffset +
+          tempState.diameter / 2 &&
+      tempState.yBall < tempState.yPaddleLeft + tempState.paddleHeight &&
+      tempState.yBall >= tempState.yPaddleLeft
     ) {
       if (
-        state.yBall >= state.yPaddleLeft &&
-        state.yBall < state.yPaddleLeft + 0.5 * state.paddleHeight
+        tempState.yBall >= tempState.yPaddleLeft &&
+        tempState.yBall < tempState.yPaddleLeft + 0.5 * tempState.paddleHeight
       ) {
-        state.yBallSpeed = Math.abs(state.yBallSpeed) * -1;
-        state.xBallSpeed = Math.abs(state.xBallSpeed);
+        tempState.yBallSpeed = Math.abs(tempState.yBallSpeed) * -1;
+        tempState.xBallSpeed = Math.abs(tempState.xBallSpeed);
       }
       if (
-        state.yBall > state.yPaddleLeft + 0.5 * state.paddleHeight &&
-        state.yBall <= state.yPaddleLeft + state.paddleHeight
+        tempState.yBall >
+          tempState.yPaddleLeft + 0.5 * tempState.paddleHeight &&
+        tempState.yBall <= tempState.yPaddleLeft + tempState.paddleHeight
       ) {
-        state.yBallSpeed = Math.abs(state.yBallSpeed);
-        state.xBallSpeed = Math.abs(state.xBallSpeed);
+        tempState.yBallSpeed = Math.abs(tempState.yBallSpeed);
+        tempState.xBallSpeed = Math.abs(tempState.xBallSpeed);
       }
     }
     // points only if behind left wall
-    else if (state.xBall < state.diameter / 2) {
-      state.xBallSpeed *= -1;
-      state.scoreRight++;
-      if (state.scoreRight === 10) {
-        state.setState({finished: true});
+    else if (tempState.xBall < tempState.diameter / 2) {
+      tempState.xBallSpeed *= -1;
+      tempState.scoreRight++;
+      if (tempState.scoreRight === 10) {
+        tempState.settempState({finished: true});
       }
-      state.started = false;
+      tempState.started = false;
       // put ball for left serve
-      state.xBall = state.xPaddleLeft + state.paddleWidth + state.diameter / 2;
-      state.yBall = state.yPaddleLeft + 0.5 * state.paddleHeight;
-      state.leftServe = true;
+      tempState.xBall =
+        tempState.xPaddleLeft + tempState.paddleWidth + tempState.diameter / 2;
+      tempState.yBall = tempState.yPaddleLeft + 0.5 * tempState.paddleHeight;
+      tempState.leftServe = true;
     }
 
     // Detect collision with right paddle
     // if hit with upper half of paddle, redirect up, if lower half, redirect down
     if (
-      state.xBall >=
-        state.windowWidth -
-          state.borderOffset -
-          state.paddleWidth -
-          state.diameter / 2 &&
-      state.yBall <= state.yPaddleRight + state.paddleHeight &&
-      state.yBall >= state.yPaddleRight
+      tempState.xBall >=
+        tempState.windowWidth -
+          tempState.borderOffset -
+          tempState.paddleWidth -
+          tempState.diameter / 2 &&
+      tempState.yBall <= tempState.yPaddleRight + tempState.paddleHeight &&
+      tempState.yBall >= tempState.yPaddleRight
     ) {
       if (
-        state.yBall >= state.yPaddleRight &&
-        state.yBall < state.yPaddleRight + 0.5 * state.paddleHeight
+        tempState.yBall >= tempState.yPaddleRight &&
+        tempState.yBall < tempState.yPaddleRight + 0.5 * tempState.paddleHeight
       ) {
-        state.yBallSpeed = Math.abs(state.yBallSpeed) * -1;
-        state.xBallSpeed = Math.abs(state.xBallSpeed) * -1;
+        tempState.yBallSpeed = Math.abs(tempState.yBallSpeed) * -1;
+        tempState.xBallSpeed = Math.abs(tempState.xBallSpeed) * -1;
       }
       if (
-        state.yBall > state.yPaddleRight + 0.5 * state.paddleHeight &&
-        state.yBall <= state.yPaddleRight + state.paddleHeight
+        tempState.yBall >
+          tempState.yPaddleRight + 0.5 * tempState.paddleHeight &&
+        tempState.yBall <= tempState.yPaddleRight + tempState.paddleHeight
       ) {
-        state.yBallSpeed = Math.abs(state.yBallSpeed);
-        state.xBallSpeed = Math.abs(state.xBallSpeed) * -1;
+        tempState.yBallSpeed = Math.abs(tempState.yBallSpeed);
+        tempState.xBallSpeed = Math.abs(tempState.xBallSpeed) * -1;
       }
     }
     // points if behind right wall
     // pause game and do serve position for the lost point user
-    else if (state.xBall + state.diameter / 2 > state.windowWidth) {
-      state.xBallSpeed *= -1;
-      state.scoreLeft++;
-      if (state.scoreLeft === 10) {
-        state.setState({finished: true});
+    else if (tempState.xBall + tempState.diameter / 2 > tempState.windowWidth) {
+      tempState.xBallSpeed *= -1;
+      tempState.scoreLeft++;
+      if (tempState.scoreLeft === 10) {
+        tempState.settempState({finished: true});
       }
-      state.started = false;
+      tempState.started = false;
       // put ball for right serve
-      state.xBall = state.xPaddleRight - state.diameter / 2;
-      state.yBall = state.yPaddleRight + 0.5 * state.paddleHeight;
-      state.rightServe = true;
+      tempState.xBall = tempState.xPaddleRight - tempState.diameter / 2;
+      tempState.yBall = tempState.yPaddleRight + 0.5 * tempState.paddleHeight;
+      tempState.rightServe = true;
     }
 
-    bounceTopBottom();
+    bounceTopBottom(tempState);
 
     // Draw paddle left
     p5.fill(255, 255, 255);
     p5.noStroke();
     p5.rect(
-      state.xPaddleLeft,
-      state.yPaddleLeft,
-      state.paddleWidth,
-      state.paddleHeight,
+      tempState.xPaddleLeft,
+      tempState.yPaddleLeft,
+      tempState.paddleWidth,
+      tempState.paddleHeight,
     );
 
     // Draw paddle right
     p5.fill(255, 255, 255);
     p5.noStroke();
     p5.rect(
-      state.xPaddleRight,
-      state.yPaddleRight,
-      state.paddleWidth,
-      state.paddleHeight,
+      tempState.xPaddleRight,
+      tempState.yPaddleRight,
+      tempState.paddleWidth,
+      tempState.paddleHeight,
     );
 
     drawStaticItems(p5);
 
     // Draw ball (top layer)
     p5.fill(255, 255, 255);
-    p5.ellipse(state.xBall, state.yBall, state.diameter, state.diameter);
+    p5.ellipse(
+      tempState.xBall,
+      tempState.yBall,
+      tempState.diameter,
+      tempState.diameter,
+    );
+    setState(tempState);
   };
 
-  const bounceTopBottom = () => {
+  const bounceTopBottom = (state) => {
     // bounce from top and bottom
     if (
       state.yBall < state.diameter / 2 ||
@@ -151,27 +161,34 @@ export default function PongComponent() {
       state.yBallSpeed *= -1;
     }
   };
-  const moveBallDuringRightServe = (moveBallDuringRightServe) => {
-    if (moveBallDuringRightServe) {
-      state.xBall = state.xPaddleRight - state.diameter / 2;
-      state.yBall = state.yPaddleRight + 0.5 * state.paddleHeight;
+  const moveBallDuringRightServe = (tempState) => {
+    if (tempState.rightServe) {
+      tempState.xBall = tempState.xPaddleRight - tempState.diameter / 2;
+      tempState.yBall = tempState.yPaddleRight + 0.5 * tempState.paddleHeight;
     }
   };
 
-  const moveBallDuringLeftServe = (moveBallDuringLeftServe) => {
-    if (moveBallDuringLeftServe) {
-      state.xBall = state.xPaddleLeft + state.paddleWidth + state.diameter / 2;
-      state.yBall = state.yPaddleLeft + 0.5 * state.paddleHeight;
+  const moveBallDuringLeftServe = (tempState) => {
+    if (tempState.leftServe) {
+      tempState.xBall =
+        tempState.xPaddleLeft + tempState.paddleWidth + tempState.diameter / 2;
+      tempState.yBall = tempState.yPaddleLeft + 0.5 * tempState.paddleHeight;
     }
   };
 
-  const boundToWindow = () => {
-    if (state.yPaddleLeft <= 0) state.yPaddleLeft = 0;
-    if (state.yPaddleLeft + state.paddleHeight >= state.windowHeight)
-      state.yPaddleLeft = state.windowHeight - state.paddleHeight;
-    if (state.yPaddleRight <= 0) state.yPaddleRight = 0;
-    if (state.yPaddleRight + state.paddleHeight >= state.windowHeight)
-      state.yPaddleRight = state.windowHeight - state.paddleHeight;
+  const boundToWindow = (tempState) => {
+    if (tempState.yPaddleLeft <= 0) tempState.yPaddleLeft = 0;
+    if (
+      tempState.yPaddleLeft + tempState.paddleHeight >=
+      tempState.windowHeight
+    )
+      tempState.yPaddleLeft = tempState.windowHeight - tempState.paddleHeight;
+    if (tempState.yPaddleRight <= 0) tempState.yPaddleRight = 0;
+    if (
+      tempState.yPaddleRight + tempState.paddleHeight >=
+      tempState.windowHeight
+    )
+      tempState.yPaddleRight = tempState.windowHeight - tempState.paddleHeight;
   };
 
   const drawStaticItems = (p5) => {
@@ -203,40 +220,42 @@ export default function PongComponent() {
 
   //p5 event on key press
   const keyPressed = (e) => {
+    const tempState = structuredClone(state);
     // esc to menu
     if (e.keyCode === ESC) {
-      state.setState({goToMenu: true});
+      //state.setState({goToMenu: true}); TODO
     }
     if (e.keyCode === SPACEBAR) {
       // space
-      state.started = true;
-      if (state.leftServe) {
-        state.xBallSpeed = Math.abs(state.xBallSpeed);
+      tempState.started = true;
+      if (tempState.leftServe) {
+        tempState.xBallSpeed = Math.abs(tempState.xBallSpeed);
       }
-      if (state.rightServe) {
-        state.xBallSpeed = Math.abs(state.xBallSpeed) * -1;
+      if (tempState.rightServe) {
+        tempState.xBallSpeed = Math.abs(tempState.xBallSpeed) * -1;
       }
-      state.leftServe = false;
-      state.rightServe = false;
+      tempState.leftServe = false;
+      tempState.rightServe = false;
     }
     if (e.keyCode === UP_ARROW || e.keyCode === LEFT_ARROW) {
-      state.yPaddleRight -= state.paddleStep;
+      tempState.yPaddleRight -= tempState.paddleStep;
     }
     if (e.keyCode === DOWN_ARROW || e.keyCode === RIGHT_ARROW) {
-      state.yPaddleRight += state.paddleStep;
+      tempState.yPaddleRight += tempState.paddleStep;
     }
 
     // 2nd player keys W (87) and S (83)
     if (e.keyCode === W_KEY) {
-      state.yPaddleLeft -= state.paddleStep;
+      tempState.yPaddleLeft -= tempState.paddleStep;
     }
     if (e.keyCode === S_KEY) {
-      state.yPaddleLeft += state.paddleStep;
+      tempState.yPaddleLeft += tempState.paddleStep;
     }
 
-    moveBallDuringLeftServe(state.leftServe);
-    moveBallDuringRightServe(state.rightServe);
-    boundToWindow();
+    moveBallDuringLeftServe(tempState);
+    moveBallDuringRightServe(tempState);
+    boundToWindow(tempState);
+    setState(tempState);
   };
 
   return <Sketch setup={setup} draw={draw} keyPressed={keyPressed} />;
