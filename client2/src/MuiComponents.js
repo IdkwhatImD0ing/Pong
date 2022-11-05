@@ -146,7 +146,9 @@ function PongAppBar() {
                       <TextField label="Change username" variant="outlined"
                       onChange={fieldChange}/>
                       <Button onClick={() => {
-                          setName(temp);
+                          if (temp) {
+                            setName(temp);
+                          }
                           toggleOpen();
                         }
                       }>
