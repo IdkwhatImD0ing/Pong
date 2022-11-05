@@ -1,7 +1,11 @@
 import {Box} from '@mui/material';
 import React from 'react';
-import PongComponent from './Pong';
+import PongComponent from './Single/Pong';
 
 export default function Game() {
-  return <PongComponent />;
+  return (
+    <Box sx={{display: 'flex', alignItems: 'center'}}>
+      <PongComponent />
+    </Box>
+  );
 }
