@@ -1,22 +1,7 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-// import Paper from '@mui/material/Paper'
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import {AppBar, Box, Toolbar, Typography, Button, Card, CardActions, CardContent, CardMedia, TextField, Stack, Popper, Fade} from '@mui/material';
 import JoinRightIcon from '@mui/icons-material/JoinRight';
-
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-
-import TextField from '@mui/material/TextField';
 import CheckIcon from '@mui/icons-material/Check';
-import Stack from '@mui/material/Stack';
-import Popper from '@mui/material/Popper';
-import Fade from '@mui/material/Fade';
 
 import { UserContext } from './App.js';
 
