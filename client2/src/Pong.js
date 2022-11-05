@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Sketch from 'react-p5';
-import p5Types from 'p5';
 import getInitialState from './initial';
 
 const ESC = 27;
@@ -166,22 +165,6 @@ export default function PongComponent() {
     }
   };
 
-  const mobileServeRight = (rightServe) => {
-    if (rightServe) {
-      state.xBallSpeed *= state.xBallSpeed > 0 ? -1 : 1;
-      state.rightServe = false;
-      state.started = true;
-    }
-  };
-
-  const mobileServeLeft = (leftServe) => {
-    if (leftServe) {
-      state.xBallSpeed *= state.xBallSpeed > 0 ? 1 : -1;
-      state.leftServe = false;
-      state.started = true;
-    }
-  };
-
   const boundToWindow = () => {
     if (state.yPaddleLeft <= 0) state.yPaddleLeft = 0;
     if (state.yPaddleLeft + state.paddleHeight >= state.windowHeight)
@@ -232,38 +215,6 @@ export default function PongComponent() {
     );
   };
 
-  //p5 event on mobile screen tap / desktop click
-  const touchStartedSinglePlayer = (t) => {
-    if (t.pmouseY < 0.5 * t.height) {
-      state.yPaddleRight -= state.paddleStep;
-    } else {
-      state.yPaddleRight += state.paddleStep;
-    }
-    boundToWindow();
-    mobileServeRight(state.rightServe);
-  };
-
-  //p5 event on mobile screen tap / desktop click
-  const touchStartedTwoPlayers = (t) => {
-    //right
-    if (t.pmouseY < 0.5 * t.height && t.pmouseX > 0.5 * t.width) {
-      state.yPaddleRight -= state.paddleStep;
-    }
-    if (t.pmouseY > 0.5 * t.height && t.pmouseX > 0.5 * t.width) {
-      state.yPaddleRight += state.paddleStep;
-    }
-    //left
-    if (t.pmouseY < 0.5 * t.height && t.pmouseX < 0.5 * t.width) {
-      state.yPaddleLeft -= state.paddleStep;
-    }
-    if (t.pmouseY > 0.5 * t.height && t.pmouseX < 0.5 * t.width) {
-      state.yPaddleLeft += state.paddleStep;
-    }
-    boundToWindow();
-    mobileServeRight(state.rightServe);
-    mobileServeLeft(state.leftServe);
-  };
-
   //p5 event on key press
   const keyPressed = (e) => {
     // esc to menu
@@ -290,13 +241,11 @@ export default function PongComponent() {
     }
 
     // 2nd player keys W (87) and S (83)
-    if (!state.cpuMode) {
-      if (e.keyCode === W_KEY) {
-        state.yPaddleLeft -= state.paddleStep;
-      }
-      if (e.keyCode === S_KEY) {
-        state.yPaddleLeft += state.paddleStep;
-      }
+    if (e.keyCode === W_KEY) {
+      state.yPaddleLeft -= state.paddleStep;
+    }
+    if (e.keyCode === S_KEY) {
+      state.yPaddleLeft += state.paddleStep;
     }
 
     moveBallDuringLeftServe(state.leftServe);
