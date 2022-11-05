@@ -1,25 +1,43 @@
-import logo from './logo.svg';
+import * as React from 'react'
 import './App.css';
+import * as MuiComponents from './MuiComponents.js'
+import { Box } from '@mui/material'
+// import { Typography } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
+const UserContext = React.createContext();
 
 function App() {
+  const [name, setName] = React.useState(null);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <UserContext.Provider value={{name, setName}}>
+          <MuiComponents.PongAppBar />
+          <Box height={'20vh'} />
+          {name === null ? (<MuiComponents.WelcomePrompt/>) :
+          (
+            <Box sx={{ display:'flex', justifyContent:'space-between'}}>
+              <div/>
+              <MuiComponents.CardPlayLocal />
+              <MuiComponents.CardPlayOnline />
+              <div/>
+            </Box>
+          )}
+          
+        </UserContext.Provider>
+      </ThemeProvider>
     </div>
   );
 }
 
+export {UserContext};
 export default App;
