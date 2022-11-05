@@ -4,8 +4,20 @@ var router = express();
 require('dotenv').config();
 const {Hop, ChannelType} = require('@onehop/js');
 const cors = require('cors');
+const {default: getInitialState} = require('../games/init');
 const PORT = 3001;
 const hop = new Hop(process.env.REACT_APP_HOP_PROJECT_ENV);
+
+const ESC = 27;
+const SPACEBAR = 32;
+const UP_ARROW = 38;
+const DOWN_ARROW = 40;
+const LEFT_ARROW = 37;
+const RIGHT_ARROW = 39;
+const W_KEY = 87;
+const S_KEY = 83;
+
+GAMES = new Map();
 
 const createChannelId = () => {
   var result = '';
@@ -59,11 +71,72 @@ app.get('/createCoopChannel', async (req, res) => {
     // Creation Options
     {
       // Initial Channel state object
-      state: 
+      state: getInitialState(),
     },
   );
 
   res.json({message: 'Successfully Generated Lobby!', channelId: channelId});
+});
+
+app.get('/joingame', (req, res) => {
+  const name = req.get('name');
+  const id = req.get('id');
+  const channelId = req.get('channelId');
+  const game = GAMES.get(channelId);
+  if (!game) {
+    res.json({message: 'Game not found!', response: -1});
+    return;
+  }
+  if (
+    game.state.gameStarted &&
+    game.state.playerOneId !== name &&
+    game.state.playerTwoId !== name
+  ) {
+    res.json({message: 'You are spectator!', response: 1});
+    return;
+  }
+  if (game) {
+    game.joinGame(name, id);
+  }
+  res.json({message: 'Successfully Joined Game!', response: 1});
+});
+
+app.get('/ready', (req, res) => {
+  const id = req.get('id');
+  const channelId = req.get('channelId');
+  const game = GAMES.get(channelId);
+  if (
+    (game.state.playerOneId !== id && game.state.playerTwoId !== id) ||
+    game.state.gameStarted ||
+    game.state.gameEnded
+  ) {
+    res.json({message: 'Not allowed!!', channelId: channelId});
+    return;
+  }
+  if (game) {
+    game.ready(id);
+  }
+  res.json({message: 'Successfully Ready!', channelId: channelId});
+});
+
+app.get('/keypress', (req, res) => {
+  const keyCode = req.get('keyCode');
+  const id = req.get('id');
+  const name = req.get('name');
+  const channelId = req.get('channelId');
+  const game = GAMES.get(channelId);
+  if (
+    (game.state.playerOneId !== id && game.state.playerTwoId !== id) ||
+    !game.state.gameStarted ||
+    game.state.gameEnded
+  ) {
+    res.json({message: 'Not Allowed!', channelId: channelId});
+    return;
+  }
+  if (game) {
+    game.keyPressed(keyCode);
+  }
+  res.json({message: 'Successfully Pressed Key!', channelId: channelId});
 });
 
 router.listen(PORT, () => {

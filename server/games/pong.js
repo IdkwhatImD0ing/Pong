@@ -215,12 +215,12 @@ class Pong {
   };
 
   //p5 event on key press
-  keyPressed = (e) => {
+  keyPressed = (keyCode) => {
     // esc to menu
-    if (e.keyCode === ESC) {
+    if (keyCode === ESC) {
       //state.setState({goToMenu: true}); TODO
     }
-    if (e.keyCode === SPACEBAR) {
+    if (keyCode === SPACEBAR) {
       // space
       this.state.started = true;
       if (this.state.leftServe) {
@@ -232,18 +232,18 @@ class Pong {
       this.state.leftServe = false;
       this.state.rightServe = false;
     }
-    if (e.keyCode === UP_ARROW || e.keyCode === LEFT_ARROW) {
+    if (keyCode === UP_ARROW || keyCode === LEFT_ARROW) {
       this.state.yPaddleRight -= this.state.paddleStep;
     }
-    if (e.keyCode === DOWN_ARROW || e.keyCode === RIGHT_ARROW) {
+    if (keyCode === DOWN_ARROW || keyCode === RIGHT_ARROW) {
       this.state.yPaddleRight += this.state.paddleStep;
     }
 
     // 2nd player keys W (87) and S (83)
-    if (e.keyCode === W_KEY) {
+    if (keyCode === W_KEY) {
       this.state.yPaddleLeft -= this.state.paddleStep;
     }
-    if (e.keyCode === S_KEY) {
+    if (keyCode === S_KEY) {
       this.state.yPaddleLeft += this.state.paddleStep;
     }
 

@@ -7,6 +7,16 @@ export default function getInitialState() {
   const windowWidth = 1500;
 
   const intialState = {
+    //Multiplayer states
+    playerOne: false,
+    playerTwo: false,
+    playerOneReady: false,
+    playerTwoReady: false,
+    playerOneName: '',
+    playerTwoName: '',
+    playerOneId: '',
+    playerTwoId: '',
+
     windowHeight: windowHeight,
     windowWidth: windowWidth,
 
