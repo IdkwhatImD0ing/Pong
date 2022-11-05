@@ -1,9 +1,53 @@
 import * as React from 'react';
 import {AppBar, Box, Toolbar, Typography, Button, Card, CardActions, CardContent, CardMedia, TextField, Stack, Popper, Fade} from '@mui/material';
 import JoinRightIcon from '@mui/icons-material/JoinRight';
-import CheckIcon from '@mui/icons-material/Check';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
-import { UserContext } from './App.js';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+
+import TextField from '@mui/material/TextField';
+import CheckIcon from '@mui/icons-material/Check';
+import Stack from '@mui/material/Stack';
+import Popper from '@mui/material/Popper';
+import Fade from '@mui/material/Fade';
+
+import { UserContext, RoomContext } from '../pages/Landing.js';
+
+function JoinPrompt() {
+  const [temp, setTemp] = React.useState(null);
+  
+  const fieldChange = (e) => {
+    e.preventDefault();
+    setTemp(e.target.value);
+  }
+
+  return (
+    <RoomContext.Consumer>
+      {({setRoom}) => (
+        <Stack 
+        direction='row'
+        justifyContent='center' 
+        alignItems='center'
+        spacing={2}>
+          <Typography variant="h6">
+                Trying to join a room?
+          </Typography>
+          <Stack direction={'row'}>
+            <TextField label="Room code" variant="outlined"
+            onChange={fieldChange}/>
+            <Button onClick={() => {setRoom(temp)}}>
+              Join
+              <PlayArrowIcon/>
+            </Button>
+          </Stack>
+        </Stack>
+      )}
+    </RoomContext.Consumer>
+  );
+}
 
 function WelcomePrompt() {
   const [temp, setTemp] = React.useState(null);
@@ -79,7 +123,6 @@ function CardPlayOnline() {
       </CardContent>
       <CardActions sx={{display: 'flex', justifyContent: 'center'}}>
         <Button size="small">Create Game</Button>
-        <Button size="small">Join Game</Button>
       </CardActions>
     </Card>
   );
@@ -131,7 +174,9 @@ function PongAppBar() {
                       <TextField label="Change username" variant="outlined"
                       onChange={fieldChange}/>
                       <Button onClick={() => {
-                          setName(temp);
+                          if (temp) {
+                            setName(temp);
+                          }
                           toggleOpen();
                         }
                       }>
@@ -151,4 +196,4 @@ function PongAppBar() {
   );
 }
 
-export {PongAppBar, CardPlayLocal, CardPlayOnline, WelcomePrompt};
+export {PongAppBar, CardPlayLocal, CardPlayOnline, WelcomePrompt, JoinPrompt};
