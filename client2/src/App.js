@@ -22,16 +22,18 @@ function App() {
         <CssBaseline />
         <UserContext.Provider value={{name, setName}}>
           <MuiComponents.PongAppBar />
+          <Box height={'20vh'} />
+          {name === null ? (<MuiComponents.WelcomePrompt/>) :
+          (
+            <Box sx={{ display:'flex', justifyContent:'space-between'}}>
+              <div/>
+              <MuiComponents.CardPlayLocal />
+              <MuiComponents.CardPlayOnline />
+              <div/>
+            </Box>
+          )}
+          
         </UserContext.Provider>
-        <Box height={'20vh'} />
-        <Box sx={{ display:'flex', justifyContent:'space-between'}}>
-        {name === null ? (<MuiComponents.WelcomePrompt/>) : (
-          <div >
-          <MuiComponents.CardPlayLocal />
-          <MuiComponents.CardPlayOnline />
-          </div>)
-        }
-        </Box>
       </ThemeProvider>
     </div>
   );

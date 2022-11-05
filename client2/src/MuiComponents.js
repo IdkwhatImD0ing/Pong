@@ -1,7 +1,7 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper'
+// import Paper from '@mui/material/Paper'
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -12,14 +12,42 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 
+import TextField from '@mui/material/TextField';
+import CheckIcon from '@mui/icons-material/Check';
+import Stack from '@mui/material/Stack';
+
 import { UserContext } from './App.js';
 
-function WelcomePrompt() {
-  return (
-    <Paper sx={{height: '30vh', width: '90vh'}}>
-      <Typography variant='h4'> Welcome to Pong! </Typography>
 
-    </Paper>
+
+function WelcomePrompt() {
+  const [temp, setTemp] = React.useState(null);
+  
+  const fieldChange = (e) => {
+    e.preventDefault();
+    setTemp(e.target.value);
+  }
+
+  return (
+    <UserContext.Consumer>
+      {({setName}) => (
+        <Stack 
+        direction='column'
+        justifyContent='center' 
+        alignItems='center'
+        spacing={2}>
+          <Typography variant='h4'> Welcome to Pong! </Typography>
+          <Stack direction={'row'}>
+            <TextField label="Enter username" variant="outlined"
+            onChange={fieldChange}/>
+            <Button onClick={() => {setName(temp)}}>
+              Done
+              <CheckIcon />
+            </Button>
+          </Stack>
+        </Stack>
+      )}
+    </UserContext.Consumer>
   );
 }
 
@@ -75,7 +103,7 @@ function CardPlayOnline() {
 function PongAppBar() {
   return (
     <UserContext.Consumer>
-      {({name, setName}) => (
+      {({name}) => (
         <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" >
           <Toolbar sx={{justifyContent: 'space-between'}}>
@@ -85,8 +113,7 @@ function PongAppBar() {
             </Typography>
             <div />
             <Button color="inherit"
-            sx={{textTransform: 'none'}}
-            onClick={() => (setName('joe'))}>
+            sx={{textTransform: 'none'}}>
               <Typography variant="h6" component="div">
                 {name}
               </Typography>
