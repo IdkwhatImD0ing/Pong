@@ -1,6 +1,6 @@
 import * as React from 'react'
 import './App.css';
-import * as MuiComponents from './MuiComponents.js'
+import * as MuiComponents from './components/MuiComponents.js'
 import { Box } from '@mui/material'
 // import { Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';

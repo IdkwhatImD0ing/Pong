@@ -18,7 +18,7 @@ import Stack from '@mui/material/Stack';
 import Popper from '@mui/material/Popper';
 import Fade from '@mui/material/Fade';
 
-import { UserContext } from './App.js';
+import { UserContext } from '../App.js';
 
 function WelcomePrompt() {
   const [temp, setTemp] = React.useState(null);
