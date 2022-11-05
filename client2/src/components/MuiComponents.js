@@ -19,7 +19,7 @@ import Stack from '@mui/material/Stack';
 import Popper from '@mui/material/Popper';
 import Fade from '@mui/material/Fade';
 
-import { UserContext, RoomContext } from '../App.js';
+import { UserContext, RoomContext } from '../pages/Landing.js';
 
 function JoinPrompt() {
   const [temp, setTemp] = React.useState(null);
