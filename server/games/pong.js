@@ -173,18 +173,7 @@ class Pong {
         this.state.yBallSpeed *= -1;
       }
 
-      hop.channels.patchState(this.channelId, {
-        xBall: this.state.xBall,
-        yBall: this.state.yBall,
-        xBallSpeed: this.state.xBallSpeed,
-        yBallSpeed: this.state.yBallSpeed,
-        rightServe: this.state.rightServe,
-        leftServe: this.state.leftServe,
-        started: this.state.started,
-        scoreLeft: this.state.scoreLeft,
-        scoreRight: this.state.scoreRight,
-        gameStarted: this.state.gameStarted,
-      });
+      hop.channels.patchState(this.channelId, this.state);
     }, 25);
   }
 
@@ -264,16 +253,7 @@ class Pong {
     //this.moveBallDuringLeftServe();
     //this.moveBallDuringRightServe();
     this.boundToWindow();
-    hop.channels.patchState(this.channelId, {
-      xBallSpeed: this.state.xBallSpeed,
-      started: this.state.started,
-      yPaddleLeft: this.state.yPaddleLeft,
-      yPaddleRight: this.state.yPaddleRight,
-      xBall: this.state.xBall,
-      yBall: this.state.yBall,
-      leftServe: this.state.leftServe,
-      rightServe: this.state.rightServe,
-    });
+    hop.channels.patchState(this.channelId, this.state);
   };
 }
 
