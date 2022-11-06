@@ -1,9 +1,13 @@
 import * as React from 'react'
+import PropTypes from 'prop-types';
 import * as MuiComponents from '../components/MuiComponents.js'
 import { Box } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Stack } from '@mui/system';
+
+export const UserContext = React.createContext();
+export const RoomContext = React.createContext();
 
 const darkTheme = createTheme({
   palette: {
@@ -11,12 +15,10 @@ const darkTheme = createTheme({
   },
 });
 
-const UserContext = React.createContext();
-const RoomContext = React.createContext();
+export function Landing(props) {
+  const [name, setName] = props.nameState;
+  const [room, setRoom] = props.roomState;
 
-export function Landing() {
-  const [name, setName] = React.useState(null);
-  const [room, setRoom] = React.useState(null);
   return (
     <div>
       <ThemeProvider theme={darkTheme}>
@@ -33,8 +35,8 @@ export function Landing() {
 
               <Box sx={{ display:'flex', justifyContent:'space-between'}}>
                 <div/>
-                <MuiComponents.CardPlayLocal />
-                <MuiComponents.CardPlayOnline />
+                    <MuiComponents.CardPlayLocal />
+                    <MuiComponents.CardPlayOnline />
                 <div/>
               </Box>
             </Stack>
@@ -45,4 +47,7 @@ export function Landing() {
   );
 }
 
-export {UserContext, RoomContext};
+Landing.propTypes = {
+    roomState: PropTypes.array,
+    nameState: PropTypes.array,
+}

@@ -2,17 +2,7 @@ import * as React from 'react';
 import {AppBar, Box, Toolbar, Typography, Button, Card, CardActions, CardContent, CardMedia, TextField, Stack, Popper, Fade} from '@mui/material';
 import JoinRightIcon from '@mui/icons-material/JoinRight';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-
-import TextField from '@mui/material/TextField';
 import CheckIcon from '@mui/icons-material/Check';
-import Stack from '@mui/material/Stack';
-import Popper from '@mui/material/Popper';
-import Fade from '@mui/material/Fade';
 
 import { UserContext, RoomContext } from '../pages/Landing.js';
 
