@@ -24,7 +24,7 @@ function getInitialState() {
     windowWidth: windowWidth,
 
     finished: false,
-    scoreLeft: 0,
+    scoreLeft: -1,
     scoreRight: 0,
     paddleWidth: paddleWidth,
     paddleHeight: paddleHeight,
