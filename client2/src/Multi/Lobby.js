@@ -1,9 +1,10 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useSearchParams} from 'react-router-dom';
 import {useReadChannelState} from '@onehop/react';
 import {useBeforeunload} from 'react-beforeunload';
 import {Box, Stack, Typography, Button, CircularProgress} from '@mui/material';
+import {UserContext} from '../App.js';
 
 const url =
   'https://images.unsplash.com/photo-1592035659284-3b39971c1107?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1726&q=80';
@@ -14,8 +15,8 @@ export default function Lobby(props) {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const name = 'Bill'; //TODO: Remove testing name and id
-  const playerId = 'testid';
+  const {name, setName, userId, setUserId} = useContext(UserContext);
+  const playerId = userId;
   //console.log(params.get("channelId"));
   const channelId = params.get('channelId');
   const [gameNotFound, setGameNotFound] = useState(false);
