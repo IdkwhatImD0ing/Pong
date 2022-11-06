@@ -15,9 +15,10 @@ export const UserContext = React.createContext();
 function App() {
   function genId() {
     return (
-      Date.now().toString(36) + 
-      Math.floor(Math.pow(10,12) + Math.random() * 9 * Math.pow(10,12))
-      .toString(36)
+      Date.now().toString(36) +
+      Math.floor(
+        Math.pow(10, 12) + Math.random() * 9 * Math.pow(10, 12),
+      ).toString(36)
     );
   }
   const [name, setName] = React.useState(null);
@@ -26,11 +27,11 @@ function App() {
   return (
     <div className="App">
       <UserContext.Provider value={{name, setName, userId, setUserId}}>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/game" element={<Game />} />
-        <Route path="/multi" element={<Lobby />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/game" element={<Game />} />
+          <Route path="/multi" element={<Lobby />} />
+        </Routes>
       </UserContext.Provider>
     </div>
   );

@@ -12,13 +12,16 @@ const W_KEY = 87;
 const S_KEY = 83;
 
 export default function PongComponent() {
-  const [state, setState] = useState(getInitialState(window));
+  const [state, setState] = useState(getInitialState());
 
   //p5 Canvas Setup
   const setup = (p5, canvasParentRef) => {
-    p5.createCanvas(state.windowWidth, state.windowHeight, 'p2d').parent(
-      canvasParentRef,
-    );
+    let canvas = p5
+      .createCanvas(state.windowWidth, state.windowHeight, 'p2d')
+      .parent(canvasParentRef);
+    let x = (window.innerWidth - canvas.width) / 2;
+    let y = (window.innerHeight - canvas.height) / 2;
+    canvas.position(x, y);
   };
 
   //p5 Canvas Re-draw method
