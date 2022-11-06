@@ -152,6 +152,8 @@ export default function Lobby(props) {
             </Button>
         </Paper>
         <Paper>
+          <Stack direction='row' justifyContent='center' spacing={2}>
+          <Box>
           <Typography variant="h2">{state.playerOneName}</Typography>
           <Button
             onClick={onclick}
@@ -165,6 +167,7 @@ export default function Lobby(props) {
           >
             Ready
           </Button>
+          </Box>
           {state.playerTwo && (
               <Box>
               <Typography variant="h2">{state.playerTwoName}</Typography>
@@ -182,6 +185,7 @@ export default function Lobby(props) {
               </Button>
               </Box>
             )}
+            </Stack>
         </Paper>
         <Paper>
           <Button>
