@@ -26,8 +26,6 @@ Pongo lets you play Pong with your friends online or locally. You can create a r
 
 • [Hop.io](https://hop.io/)
 
-Data in database:
-
 ## 🛑Challenges we ran into
 
 • Learning material UI
