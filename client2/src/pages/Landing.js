@@ -1,7 +1,7 @@
-import * as React from 'react';
-import * as MuiComponents from '../components/MuiComponents.js';
-import {Box} from '@mui/material';
-import {ThemeProvider, createTheme} from '@mui/material/styles';
+import * as React from 'react'
+import * as MuiComponents from '../components/MuiComponents.js'
+import { Box } from '@mui/material'
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Stack } from '@mui/system';
 import { UserContext } from '../App.js';

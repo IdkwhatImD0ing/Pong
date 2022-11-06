@@ -2,7 +2,8 @@ import * as React from 'react';
 import './App.css';
 import {Routes, Route} from 'react-router-dom';
 import {Landing} from './pages/Landing';
-import Game from './Game';
+
+export const UserContext = React.createContext();
 
 function App() {
   function genId() {
@@ -19,8 +20,9 @@ function App() {
     <div className="App">
       <UserContext.Provider value={{name, setName, userId, setUserId}}>
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/game" element={<Game />} />
+        <Route path="/" element={
+          <Landing/>
+        } />
       </Routes>
       </UserContext.Provider>
     </div>
