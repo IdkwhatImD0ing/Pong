@@ -17,19 +17,19 @@ Pongo lets you play Pong with your friends online or locally. You can create a r
 
 • JavaScript
 
-• ExpressJs
+• Express.Js
 
 • [Material UI](https://mui.com/)
 
-• [HopIo](https://hop.io/)
+• [Hop.io](https://hop.io/)
 
 Data in database:
 
 ## 🛑Challenges we ran into
 
-• Learning material ui
+• Learning material UI
 
-• Some team members had never used React or Javascript before
+• Some team members had never used React or JavaScript before
 
 • Styling
 
@@ -57,6 +57,6 @@ Data in database:
 
 • More game modes
 
-• Websockets for lower latency multiplayer
+• WebSocket for lower latency multiplayer
 
-• More HopIo features such as group chats, public (no link) and private (password) lobbies.
+• More Hop.io features such as group chats, public (no link) and private (password) lobbies.
