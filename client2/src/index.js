@@ -4,7 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from './App.js';
 import {BrowserRouter} from 'react-router-dom';
-import Game from './Game';
+// import Game from './Game';
 // import PongComponent from './Pong';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
