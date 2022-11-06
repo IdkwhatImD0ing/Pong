@@ -8,15 +8,6 @@ const {default: getInitialState} = require('../games/init');
 const PORT = 3001;
 const hop = new Hop(process.env.REACT_APP_HOP_PROJECT_ENV);
 
-const ESC = 27;
-const SPACEBAR = 32;
-const UP_ARROW = 38;
-const DOWN_ARROW = 40;
-const LEFT_ARROW = 37;
-const RIGHT_ARROW = 39;
-const W_KEY = 87;
-const S_KEY = 83;
-
 GAMES = new Map();
 
 const createChannelId = () => {
