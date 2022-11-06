@@ -2,7 +2,7 @@ import * as React from 'react';
 import './App.css';
 import {Routes, Route} from 'react-router-dom';
 import {Landing} from './pages/Landing';
-import Game from './Game';
+import Game from './Single/Game';
 import {hop} from '@onehop/client';
 import Lobby from './Multi/Lobby';
 

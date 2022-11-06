@@ -12,7 +12,7 @@ const url =
 const loadingUrl =
   'https://images.unsplash.com/photo-1591302418462-eb55463b49d6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2502&q=80';
 
-export default function Lobby(props) {
+export default function Lobby() {
   const [params] = useSearchParams();
   const [loading, setLoading] = useState(true);
   const {name, userId} = useContext(UserContext);
@@ -289,6 +289,10 @@ export default function Lobby(props) {
   }
 
   if (state && state.gameStarted) {
-    return <PongComponent channelId={channelId} />;
+    return (
+      <Box height="100vh" width="100vw" sx={{bgcolor: '#5A5A5A'}}>
+        <PongComponent channelId={channelId} />
+      </Box>
+    );
   }
 }
