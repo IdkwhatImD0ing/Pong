@@ -139,7 +139,7 @@ router.get('/keypress', (req, res) => {
     return;
   }
   if (game) {
-    game.keyPressed(keyCode);
+    game.keyPressed(keyCode, id);
   }
   res.json({message: 'Successfully Pressed Key!', channelId: channelId});
 });
