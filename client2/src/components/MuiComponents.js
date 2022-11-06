@@ -20,7 +20,7 @@ import {useNavigate} from 'react-router-dom';
 
 import CheckIcon from '@mui/icons-material/Check';
 
-import {UserContext, RoomContext} from '../pages/Landing.js';
+import { UserContext } from '../pages/Landing.js';
 
 function JoinPrompt() {
   const [temp, setTemp] = React.useState(null);
@@ -28,36 +28,30 @@ function JoinPrompt() {
   const fieldChange = (e) => {
     e.preventDefault();
     setTemp(e.target.value);
-  };
+  }
+  const handleJoinSubmit = () => {
+    // Navigate to room page
+    console.log(temp);
+  }
 
   return (
-    <RoomContext.Consumer>
-      {({setRoom}) => (
-        <Stack
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          spacing={2}
-        >
-          <Typography variant="h6">Trying to join a room?</Typography>
-          <Stack direction={'row'}>
-            <TextField
-              label="Room code"
-              variant="outlined"
-              onChange={fieldChange}
-            />
-            <Button
-              onClick={() => {
-                setRoom(temp);
-              }}
-            >
-              Join
-              <PlayArrowIcon />
-            </Button>
-          </Stack>
-        </Stack>
-      )}
-    </RoomContext.Consumer>
+    <Stack 
+    direction='row'
+    justifyContent='center' 
+    alignItems='center'
+    spacing={2}>
+      <Typography variant="h6">
+            Trying to join a room?
+      </Typography>
+      <Stack direction={'row'}>
+        <TextField label="Room code" variant="outlined"
+        onChange={fieldChange}/>
+        <Button onClick={handleJoinSubmit}>
+          Join
+          <PlayArrowIcon/>
+        </Button>
+      </Stack>
+    </Stack>
   );
 }
 
