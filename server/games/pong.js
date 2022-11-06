@@ -176,7 +176,7 @@ class Pong {
       }
 
       hop.channels.patchState(this.channelId, this.state);
-    }, 25);
+    }, 50);
   }
 
   moveBallDuringRightServe = () => {
