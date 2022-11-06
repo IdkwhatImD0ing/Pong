@@ -17,6 +17,9 @@ function getInitialState() {
     playerOneId: '',
     playerTwoId: '',
 
+    gameStarted: false,
+    gameEnded: false,
+
     windowHeight: windowHeight,
     windowWidth: windowWidth,
 

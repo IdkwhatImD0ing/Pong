@@ -6,6 +6,8 @@ const {Hop, ChannelType} = require('@onehop/js');
 const cors = require('cors');
 const getInitialState = require('../games/init');
 
+const {Pong} = require('../games/pong');
+
 const PORT = 3001;
 const hop = new Hop(process.env.REACT_APP_HOP_PROJECT_ENV);
 
@@ -67,6 +69,8 @@ router.get('/createGame', async (req, res) => {
     },
   );
 
+  const g = new Pong(channelId, getInitialState());
+  GAMES.set(channelId, g);
   res.json({message: 'Successfully Generated Lobby!', channelId: channelId});
 });
 
@@ -129,10 +133,6 @@ router.get('/keypress', (req, res) => {
     game.keyPressed(keyCode);
   }
   res.json({message: 'Successfully Pressed Key!', channelId: channelId});
-});
-
-router.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
 });
 
 module.exports = router;
