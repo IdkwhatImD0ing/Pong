@@ -47,12 +47,12 @@ class Pong {
       return;
     }
     console.log('game ready');
-    if ((this.state.playerId = playerId)) {
+    if (this.state.playerOneId == playerId) {
       this.state.playerOneReady = true;
       hop.channels.patchState(this.channelId, {
         playerOneReady: this.state.playerOneReady,
       });
-    } else if ((this.state.playerId = playerId)) {
+    } else if (this.state.playerTwoId == playerId) {
       this.state.playerTwoReady = true;
       hop.channels.patchState(this.channelId, {
         playerTwoReady: this.state.playerTwoReady,
@@ -173,11 +173,23 @@ class Pong {
         this.state.yBallSpeed *= -1;
       }
 
-      hop.channels.setState(this.channelId, this.state);
-    }, this.state.speed);
+      hop.channels.patchState(this.channelId, {
+        xBall: this.state.xBall,
+        yBall: this.state.yBall,
+        xBallSpeed: this.state.xBallSpeed,
+        yBallSpeed: this.state.yBallSpeed,
+        rightServe: this.state.rightServe,
+        leftServe: this.state.leftServe,
+        started: this.state.started,
+        scoreLeft: this.state.scoreLeft,
+        scoreRight: this.state.scoreRight,
+        gameStarted: this.state.gameStarted,
+      });
+    }, 25);
   }
 
   moveBallDuringRightServe = () => {
+    console.log('moveBallDuringRightServe');
     if (this.state.rightServe) {
       this.state.xBall = this.state.xPaddleRight - this.state.diameter / 2;
       this.state.yBall =
@@ -186,6 +198,7 @@ class Pong {
   };
 
   moveBallDuringLeftServe = () => {
+    console.log('moveBallDuringLeftServe');
     if (this.state.leftServe) {
       this.state.xBall =
         this.state.xPaddleLeft +
@@ -230,28 +243,37 @@ class Pong {
       this.state.leftServe = false;
       this.state.rightServe = false;
     }
-    if (playerId === this.state.playerOneId) {
-      if (keyCode === UP_ARROW || keyCode === W) {
-        this.state.yPaddleLeft -= this.state.paddleSpeed;
+    if (playerId == this.state.playerOneId) {
+      if (keyCode == UP_ARROW || keyCode == W_KEY) {
+        this.state.yPaddleLeft -= this.state.paddleStep;
       }
-      if (keyCode === DOWN_ARROW || keyCode === S) {
-        this.state.yPaddleLeft += this.state.paddleSpeed;
-      }
-    }
-
-    if (playerId === this.state.playerTwoId) {
-      if (keyCode === UP_ARROW || keyCode === W) {
-        this.state.yPaddleRight -= this.state.paddleSpeed;
-      }
-      if (keyCode === DOWN_ARROW || keyCode === S) {
-        this.state.yPaddleRight += this.state.paddleSpeed;
+      if (keyCode == DOWN_ARROW || keyCode == S_KEY) {
+        this.state.yPaddleLeft += this.state.paddleStep;
       }
     }
 
-    moveBallDuringLeftServe(this.state);
-    moveBallDuringRightServe(this.state);
-    boundToWindow(this.state);
-    hop.channels.setState(this.channelId, this.state);
+    if (playerId == this.state.playerTwoId) {
+      if (keyCode == UP_ARROW || keyCode == W_KEY) {
+        this.state.yPaddleRight -= this.state.paddleStep;
+      }
+      if (keyCode == DOWN_ARROW || keyCode == S_KEY) {
+        this.state.yPaddleRight += this.state.paddleStep;
+      }
+    }
+
+    //this.moveBallDuringLeftServe();
+    //this.moveBallDuringRightServe();
+    this.boundToWindow();
+    hop.channels.patchState(this.channelId, {
+      xBallSpeed: this.state.xBallSpeed,
+      started: this.state.started,
+      yPaddleLeft: this.state.yPaddleLeft,
+      yPaddleRight: this.state.yPaddleRight,
+      xBall: this.state.xBall,
+      yBall: this.state.yBall,
+      leftServe: this.state.leftServe,
+      rightServe: this.state.rightServe,
+    });
   };
 }
 

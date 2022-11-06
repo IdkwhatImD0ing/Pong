@@ -20,7 +20,7 @@ const RIGHT_ARROW = 39;
 const W_KEY = 87;
 const S_KEY = 83;
 
-GAMES = new Map();
+const GAMES = new Map();
 
 const createChannelId = () => {
   var result = '';
@@ -142,6 +142,20 @@ router.get('/keypress', (req, res) => {
     game.keyPressed(keyCode, id);
   }
   res.json({message: 'Successfully Pressed Key!', channelId: channelId});
+});
+
+router.use(function (err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  console.error(err);
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: err,
+  });
 });
 
 module.exports = router;
