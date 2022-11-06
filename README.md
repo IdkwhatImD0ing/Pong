@@ -1,4 +1,4 @@
-# Pongo (Pong-Go)
+# PonGo (Pong-Go)
 
 ## Demo Link
 In progress
