@@ -2,13 +2,21 @@ import React, {useEffect, useRef, useState, useContext} from 'react';
 import {useSearchParams} from 'react-router-dom';
 import {useReadChannelState} from '@onehop/react';
 import {useBeforeunload} from 'react-beforeunload';
-import {Box, Stack, Typography, Button, CircularProgress} from '@mui/material';
+import {
+  Box,
+  Stack,
+  Typography,
+  Button,
+  CircularProgress,
+  Paper,
+  CssBaseline,
+} from '@mui/material';
 import {UserContext} from '../App.js';
 import PongComponent from './Pong.js';
 import {useNavigate} from 'react-router-dom';
+import {ThemeProvider, createTheme} from '@mui/material/styles';
+import * as MuiComponents from '../components/MuiComponents.js';
 
-const url =
-  'https://images.unsplash.com/photo-1592035659284-3b39971c1107?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1726&q=80';
 const loadingUrl =
   'https://images.unsplash.com/photo-1591302418462-eb55463b49d6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2502&q=80';
 
@@ -143,146 +151,91 @@ export default function Lobby() {
     );
   }
 
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
+
   if (state && !state.gameStarted) {
     return (
       <>
-        <Box
-          component="section"
-          sx={{
-            backgroundImage: `url(${url})`,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '100vh',
-          }}
-        >
-          <Stack
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            justifyItems="center"
-            spacing={5}
-            sx={{height: '20vh'}}
-          >
-            <Typography variant="h5" sx={{color: 'white'}}>
-              Room Code: {channelId}
-            </Typography>
-            <Button
-              variant="contained"
-              onClick={() => {
-                console.log(channelId);
-                navigator.clipboard.writeText(channelId);
-              }}
-              sx={{
-                backgroundColor: 'black',
-                '&:hover': {
-                  backgroundColor: 'white',
-                  color: 'black',
-                },
-              }}
+        <Box>
+          <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
+            <MuiComponents.RoomAppBar />
+            <Stack
+              direction="column"
+              spacing={2}
+              sx={{display: 'inline-block'}}
             >
-              Copy Room Code
-            </Button>
-            <Typography variant="h5" sx={{color: 'white'}}>
-              You can also use the link to join:
-            </Typography>
-            <Button
-              variant="contained"
-              onClick={() => {
-                console.log(window.location.href);
-                navigator.clipboard.writeText(window.location.href);
-              }}
-              sx={{
-                backgroundColor: 'black',
-                '&:hover': {
-                  backgroundColor: 'white',
-                  color: 'black',
-                },
-              }}
-            >
-              Copy Link
-            </Button>
-          </Stack>
-          <Stack
-            direction="row"
-            justifyContent="space-around"
-            alignItems="center"
-            justifyItems="center"
-            spacing={10}
-            sx={{height: '20vh'}}
-          >
-            <Box
-              padding="3%"
-              sx={{
-                marginTop: 0,
-                display: 'flex',
-                backdropFilter: 'blur(10px)',
-                boxShadow: '0px 0px 10px #000000',
-                backgroundColor: 'rgba(255, 255, 255, 0.275)',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Stack
-                drection="column"
-                justifyContent="center"
-                alignItems="center"
-                spacing={3}
-              >
-                <Typography variant="h2">{state.playerOneName}</Typography>
+              <Box /> {/* empty box for spacing*/}
+              <Paper sx={{padding: 3}}>
+                <Typography variant="h5">Room Code: {channelId}</Typography>
                 <Button
-                  variant="contained"
-                  onClick={onclick}
-                  sx={{
-                    backgroundColor: state.playerOneReady ? 'green' : 'red',
-                    '&:hover': {
-                      backgroundColor: 'white',
-                      color: 'black',
-                    },
+                  onClick={() => {
+                    console.log(channelId);
+                    navigator.clipboard.writeText(channelId);
                   }}
                 >
-                  Ready
+                  Copy Room Code
                 </Button>
-              </Stack>
-            </Box>
-            {state.playerTwo && (
-              <Box
-                padding="3%"
-                sx={{
-                  marginTop: 0,
-                  display: 'flex',
-                  backdropFilter: 'blur(10px)',
-                  boxShadow: '0px 0px 10px #000000',
-                  backgroundColor: 'rgba(255, 255, 255, 0.275)',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <Stack
-                  drection="column"
-                  justifyContent="center"
-                  alignItems="center"
-                  spacing={3}
+              </Paper>
+              <Paper sx={{padding: 3}}>
+                <Typography variant="h5">
+                  You can also use the link to join:
+                </Typography>
+                <Button
+                  onClick={() => {
+                    console.log(window.location.href);
+                    navigator.clipboard.writeText(window.location.href);
+                  }}
                 >
-                  <Typography variant="h2">{state.playerTwoName}</Typography>
-                  <Button
-                    variant="contained"
-                    onClick={onclick}
-                    sx={{
-                      backgroundColor: state.playerTwoReady ? 'green' : 'red',
-                      '&:hover': {
-                        backgroundColor: 'white',
-                        color: 'black',
-                      },
-                    }}
-                  >
-                    Ready
-                  </Button>
+                  Copy Link
+                </Button>
+              </Paper>
+              <Paper sx={{padding: 3}}>
+                <Stack direction="row" justifyContent="center" spacing={2}>
+                  <Box>
+                    <Typography variant="h2">{state.playerOneName}</Typography>
+                    <Button
+                      onClick={onclick}
+                      sx={{
+                        backgroundColor: state.playerOneReady ? 'green' : 'red',
+                        '&:hover': {
+                          backgroundColor: 'white',
+                          color: 'black',
+                        },
+                      }}
+                    >
+                      Ready
+                    </Button>
+                  </Box>
+                  {state.playerTwo && (
+                    <Box>
+                      <Typography variant="h2">
+                        {state.playerTwoName}
+                      </Typography>
+                      <Button
+                        onClick={onclick}
+                        sx={{
+                          backgroundColor: state.playerTwoReady
+                            ? 'green'
+                            : 'red',
+                          '&:hover': {
+                            backgroundColor: 'white',
+                            color: 'black',
+                          },
+                        }}
+                      >
+                        Ready
+                      </Button>
+                    </Box>
+                  )}
                 </Stack>
-              </Box>
-            )}
-          </Stack>
+              </Paper>
+            </Stack>
+          </ThemeProvider>
         </Box>
       </>
     );
