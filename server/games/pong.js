@@ -73,9 +73,11 @@ class Pong {
     });
 
     this.periodicInterval = setInterval(() => {
-      // Game loop
-      this.state.xBall += this.state.xBallSpeed;
-      this.state.yBall += this.state.yBallSpeed;
+      // Game loop{
+      if (this.state.started) {
+        this.state.xBall += this.state.xBallSpeed;
+        this.state.yBall += this.state.yBallSpeed;
+      }
 
       // Detect collision with left paddle
       // if hit with upper half of paddle, redirect up, if lower half, redirect down
@@ -217,10 +219,11 @@ class Pong {
   //p5 event on key press
   keyPressed = (keyCode, playerId) => {
     // esc to menu
-    if (keyCode === ESC) {
+    if (keyCode == ESC) {
       //state.setState({goToMenu: true}); TODO
     }
-    if (keyCode === SPACEBAR) {
+    console.log('keyPressed', keyCode, playerId);
+    if (keyCode == SPACEBAR) {
       // space
       this.state.started = true;
       if (this.state.leftServe) {
@@ -250,8 +253,8 @@ class Pong {
       }
     }
 
-    //this.moveBallDuringLeftServe();
-    //this.moveBallDuringRightServe();
+    this.moveBallDuringLeftServe();
+    this.moveBallDuringRightServe();
     this.boundToWindow();
     hop.channels.patchState(this.channelId, this.state);
   };
