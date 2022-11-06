@@ -1,4 +1,4 @@
-export default function getInitialState() {
+function getInitialState() {
   const paddleWidth = 16;
   const paddleHeight = 130;
   const borderOffset = 5;
@@ -50,3 +50,5 @@ export default function getInitialState() {
   };
   return intialState;
 }
+
+module.exports = getInitialState;
