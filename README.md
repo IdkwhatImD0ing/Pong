@@ -1,7 +1,10 @@
 # PonGo (Pong-Go)
 
 ## Demo Link
-In progress
+
+Website: [PonGo](https://pong.hop.sh/)
+
+[Demo Video](https://youtu.be/oa9iw48qXXc)
 
 ## 💡Inspiration
 
