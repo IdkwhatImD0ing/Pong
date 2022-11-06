@@ -24,6 +24,7 @@ import {UserContext} from '../App.js';
 
 export function JoinPrompt() {
   const [temp, setTemp] = React.useState(null);
+  const navigate = useNavigate();
 
   const fieldChange = (e) => {
     e.preventDefault();
@@ -31,7 +32,7 @@ export function JoinPrompt() {
   };
   const handleJoinSubmit = () => {
     // Navigate to room page
-    console.log(temp);
+    navigate(`/multi?channelId=${temp}`);
   };
 
   return (
@@ -129,14 +130,11 @@ export function CardPlayLocal() {
 }
 
 export function CardPlayOnline() {
-  const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   const createGame = () => {
-    setLoading(true);
-    fetch('http://localhost:3001/createGame')
+    fetch('https://pongo.hop.sh/createGame')
       .then((res) => res.json())
       .then((data) => {
-        setLoading(false);
         navigate(`/multi?channelId=${data.channelId}`);
       });
   };

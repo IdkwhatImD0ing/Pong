@@ -1,22 +1,25 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Sketch from 'react-p5';
 import {useReadChannelState} from '@onehop/react';
-import {useSearchParams} from 'react-router-dom';
 
 export default function PongComponent(props) {
-  const [params] = useSearchParams();
   //console.log(params.get("channelId"));
+  // eslint-disable-next-line react/prop-types
   const {state} = useReadChannelState(props.channelId);
   //p5 Canvas Setup
   const setup = (p5, canvasParentRef) => {
-    p5.createCanvas(state.windowWidth, state.windowHeight, 'p2d').parent(
-      canvasParentRef,
-    );
+    let canvas = p5
+      .createCanvas(state.windowWidth, state.windowHeight, 'p2d')
+      .parent(canvasParentRef);
+    let x = (window.innerWidth - canvas.width) / 2;
+    let y = (window.innerHeight - canvas.height) / 2;
+    canvas.position(x, y);
   };
 
   //p5 Canvas Re-draw method
   const draw = (p5) => {
     // Draw paddle left
+    p5.background(0, 0, 0);
     p5.fill(255, 255, 255);
     p5.noStroke();
     p5.rect(

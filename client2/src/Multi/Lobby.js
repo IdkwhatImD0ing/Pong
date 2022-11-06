@@ -1,25 +1,26 @@
 import React, {useEffect, useRef, useState, useContext} from 'react';
-import {useNavigate} from 'react-router-dom';
 import {useSearchParams} from 'react-router-dom';
 import {useReadChannelState} from '@onehop/react';
 import {useBeforeunload} from 'react-beforeunload';
 import {Box, Stack, Typography, Button, CircularProgress} from '@mui/material';
 import {UserContext} from '../App.js';
+import PongComponent from './Pong.js';
+import {useNavigate} from 'react-router-dom';
 
 const url =
   'https://images.unsplash.com/photo-1592035659284-3b39971c1107?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1726&q=80';
 const loadingUrl =
   'https://images.unsplash.com/photo-1591302418462-eb55463b49d6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2502&q=80';
 
-export default function Lobby(props) {
+export default function Lobby() {
   const [params] = useSearchParams();
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const {name, setName, userId, setUserId} = useContext(UserContext);
+  const {name, userId} = useContext(UserContext);
   const playerId = userId;
   //console.log(params.get("channelId"));
   const channelId = params.get('channelId');
   const [gameNotFound, setGameNotFound] = useState(false);
+  const navigate = useNavigate();
 
   const {state} = useReadChannelState(channelId);
   const stateRef = useRef(state);
@@ -31,7 +32,7 @@ export default function Lobby(props) {
 
   //Tells the server the player has left the channel
   useBeforeunload(() => {
-    fetch('http://localhost:3001/leaveChannel', {
+    fetch('https://pongo.hop.sh/leaveChannel', {
       headers: {channelId: channelId},
       keepalive: true,
     }).then((res) => res.json());
@@ -39,7 +40,7 @@ export default function Lobby(props) {
 
   useEffect(() => {
     if (name) {
-      fetch('http://localhost:3001/joingame', {
+      fetch('https://pongo.hop.sh/joingame', {
         headers: {name: name, id: playerId, channelId: channelId},
       })
         .then((res) => res.json())
@@ -57,7 +58,7 @@ export default function Lobby(props) {
   }, []);
 
   function onclick() {
-    fetch('http://localhost:3001/ready', {
+    fetch('https://pongo.hop.sh/ready', {
       headers: {name: name, id: playerId, channelId: channelId},
     }).then((res) => res.json());
   }
@@ -73,17 +74,50 @@ export default function Lobby(props) {
         stateRef.current.playerOneId === playerId) ||
       stateRef.current.playerTwoId === playerId
     ) {
-      fetch('http://localhost:3001/keypress', {
+      fetch('https://pongo.hop.sh/keypress', {
         headers: {
           keyCode: keyCode,
           name: name,
           id: playerId,
           channelId: channelId,
         },
-      }).then((res) => res.json());
+      });
     }
   };
 
+  if (gameNotFound) {
+    return (
+      <>
+        <Box
+          component="section"
+          sx={{
+            display: 'flex',
+            backgroundImage: `url(${loadingUrl})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100vh',
+          }}
+        >
+          <Stack direction="column" spacing={4} alignItems="center">
+            <Typography variant="h3">Lobby not Found</Typography>
+            <Button
+              onClick={() => {
+                navigate('/');
+              }}
+            >
+              {' '}
+              <Typography variant="h4" sx={{color: 'black'}}>
+                Go Home
+              </Typography>
+            </Button>
+          </Stack>
+        </Box>
+      </>
+    );
+  }
   if (loading) {
     return (
       <>
@@ -252,5 +286,9 @@ export default function Lobby(props) {
         </Box>
       </>
     );
+  }
+
+  if (state && state.gameStarted) {
+    return <PongComponent channelId={channelId} />;
   }
 }
