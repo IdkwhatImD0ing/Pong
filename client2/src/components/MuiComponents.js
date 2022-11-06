@@ -96,7 +96,7 @@ export function CardPlayLocal() {
   );
 }
 
-function CardPlayOnline() {
+export function CardPlayOnline() {
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   const createGame = () => {
