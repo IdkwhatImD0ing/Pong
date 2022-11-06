@@ -61,15 +61,17 @@ export default function PongComponent(props) {
     p5.textFont('Visitor', 36);
     p5.fill(255, 255, 255);
     p5.textSize(70);
+    p5.text(state.playerOneName, state.windowWidth * (1 / 4), 50);
     p5.text(
       state.scoreLeft < 10 ? '0' + state.scoreLeft : state.scoreLeft,
       state.windowWidth * (1 / 4),
-      50,
+      100,
     );
+    p5.text(state.playerTwoName, state.windowWidth * (3 / 4), 50);
     p5.text(
       state.scoreRight < 10 ? '0' + state.scoreRight : state.scoreRight,
       state.windowWidth * (3 / 4),
-      50,
+      100,
     );
   };
 
