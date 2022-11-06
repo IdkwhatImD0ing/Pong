@@ -73,11 +73,11 @@ export default function Lobby(props) {
         stateRef.current.playerOneId === playerId) ||
       stateRef.current.playerTwoId === playerId
     ) {
-      fetch('https://tetrius.hop.sh/keypress', {
+      fetch('http://localhost:3001/keypress', {
         headers: {
           keyCode: keyCode,
-          name: name.current,
-          id: playerId.current,
+          name: name,
+          id: playerId,
           channelId: channelId,
         },
       }).then((res) => res.json());
