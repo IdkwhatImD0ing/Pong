@@ -1,6 +1,4 @@
-import React, {useState} from 'react';
-import Sketch from 'react-p5';
-import getInitialState from './initial';
+const getInitialState = require('./init');
 
 require('dotenv').config();
 const {Hop, ChannelType} = require('@onehop/js');
@@ -253,3 +251,5 @@ class Pong {
     hop.channels.setState(this.channelId, this.state);
   };
 }
+
+module.exports = {Pong};

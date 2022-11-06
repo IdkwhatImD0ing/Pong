@@ -4,7 +4,10 @@ var router = express();
 require('dotenv').config();
 const {Hop, ChannelType} = require('@onehop/js');
 const cors = require('cors');
-const {default: getInitialState} = require('../games/init');
+const getInitialState = require('../games/init');
+
+const {Pong} = require('../games/pong');
+
 const PORT = 3001;
 const hop = new Hop(process.env.REACT_APP_HOP_PROJECT_ENV);
 
@@ -41,12 +44,12 @@ router.get('/', function (req, res, next) {
   res.render('index', {title: 'ExpressJs Server for Pong'});
 });
 
-app.get('/id', async (req, res) => {
+router.get('/id', async (req, res) => {
   const {id} = await hop.channels.tokens.create();
   res.json({message: 'Successfully Generated ID!', id: id});
 });
 
-app.get('/leaveChannel', async (req, res) => {
+router.get('/leaveChannel', async (req, res) => {
   const channelId = req.get('channelId');
   if (!channelId || !GAMES.get(channelId)) {
     res.json({message: 'Channel ID not provided!'});
@@ -63,7 +66,7 @@ app.get('/leaveChannel', async (req, res) => {
   res.json({message: 'Did not delete channel'});
 });
 
-app.get('/createCoopChannel', async (req, res) => {
+router.get('/createGame', async (req, res) => {
   const channelId = createChannelId();
   const channel = await hop.channels.create(
     ChannelType.UNPROTECTED,
@@ -75,10 +78,12 @@ app.get('/createCoopChannel', async (req, res) => {
     },
   );
 
+  const g = new Pong(channelId, getInitialState());
+  GAMES.set(channelId, g);
   res.json({message: 'Successfully Generated Lobby!', channelId: channelId});
 });
 
-app.get('/joingame', (req, res) => {
+router.get('/joingame', (req, res) => {
   const name = req.get('name');
   const id = req.get('id');
   const channelId = req.get('channelId');
@@ -101,7 +106,7 @@ app.get('/joingame', (req, res) => {
   res.json({message: 'Successfully Joined Game!', response: 1});
 });
 
-app.get('/ready', (req, res) => {
+router.get('/ready', (req, res) => {
   const id = req.get('id');
   const channelId = req.get('channelId');
   const game = GAMES.get(channelId);
@@ -119,7 +124,7 @@ app.get('/ready', (req, res) => {
   res.json({message: 'Successfully Ready!', channelId: channelId});
 });
 
-app.get('/keypress', (req, res) => {
+router.get('/keypress', (req, res) => {
   const keyCode = req.get('keyCode');
   const id = req.get('id');
   const name = req.get('name');
@@ -137,10 +142,6 @@ app.get('/keypress', (req, res) => {
     game.keyPressed(keyCode);
   }
   res.json({message: 'Successfully Pressed Key!', channelId: channelId});
-});
-
-router.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
 });
 
 module.exports = router;

@@ -96,7 +96,18 @@ export function CardPlayLocal() {
   );
 }
 
-export function CardPlayOnline() {
+function CardPlayOnline() {
+  const [loading, setLoading] = React.useState(false);
+  const navigate = useNavigate();
+  const createGame = () => {
+    setLoading(true);
+    fetch('http://localhost:3001/createGame')
+      .then((res) => res.json())
+      .then((data) => {
+        setLoading(false);
+        navigate(`/multi?channelId=${data.channelId}`);
+      });
+  };
   return (
     <Card sx={{ maxWidth: 345}}>
       <CardMedia
@@ -114,7 +125,14 @@ export function CardPlayOnline() {
         </Typography>
       </CardContent>
       <CardActions sx={{display: 'flex', justifyContent: 'center'}}>
-        <Button size="small">Create Game</Button>
+        <Button
+          size="small"
+          onClick={() => {
+            createGame();
+          }}
+        >
+          Create Game
+        </Button>
       </CardActions>
     </Card>
   );
