@@ -7,7 +7,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { Stack } from '@mui/system';
 
 export const UserContext = React.createContext();
-export const RoomContext = React.createContext();
 
 const darkTheme = createTheme({
   palette: {
@@ -17,7 +16,6 @@ const darkTheme = createTheme({
 
 export function Landing(props) {
   const [name, setName] = props.nameState;
-  const [room, setRoom] = props.roomState;
 
   return (
     <div>
@@ -29,9 +27,7 @@ export function Landing(props) {
           {name === null ? (<MuiComponents.WelcomePrompt/>) :
           (
             <Stack direction='column' spacing={3}>
-              <RoomContext.Provider value={{room, setRoom}}>
-                <MuiComponents.JoinPrompt />
-              </RoomContext.Provider>
+              <MuiComponents.JoinPrompt />
 
               <Box sx={{ display:'flex', justifyContent:'space-between'}}>
                 <div/>
@@ -48,6 +44,5 @@ export function Landing(props) {
 }
 
 Landing.propTypes = {
-    roomState: PropTypes.array,
     nameState: PropTypes.array,
 }
