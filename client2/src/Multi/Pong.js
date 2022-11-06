@@ -1,7 +1,14 @@
 import React, {useState} from 'react';
 import Sketch from 'react-p5';
+import {useReadChannelState} from '@onehop/react';
+import {useSearchParams} from 'react-router-dom';
 
 export default function PongComponent() {
+  const [params] = useSearchParams();
+  const navigate = useNavigate();
+  //console.log(params.get("channelId"));
+  const channelId = params.get('channelId');
+  const {state} = useReadChannelState(channelId);
   //p5 Canvas Setup
   const setup = (p5, canvasParentRef) => {
     p5.createCanvas(state.windowWidth, state.windowHeight, 'p2d').parent(

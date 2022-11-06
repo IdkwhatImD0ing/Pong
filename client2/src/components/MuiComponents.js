@@ -133,6 +133,17 @@ function CardPlayLocal() {
 }
 
 function CardPlayOnline() {
+  const [loading, setLoading] = React.useState(false);
+  const navigate = useNavigate();
+  const createGame = () => {
+    setLoading(true);
+    fetch('localhost:3001/createVersusChannel')
+      .then((res) => res.json())
+      .then((data) => {
+        setLoading(false);
+        navigate(`/multi?channelId=${data.channelId}`);
+      });
+  };
   return (
     <Card sx={{maxWidth: 345}}>
       <CardMedia
