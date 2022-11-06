@@ -4,9 +4,9 @@ import JoinRightIcon from '@mui/icons-material/JoinRight';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import CheckIcon from '@mui/icons-material/Check';
 
-import { UserContext } from '../pages/Landing.js';
+import { UserContext } from '../App.js';
 
-function JoinPrompt() {
+export function JoinPrompt() {
   const [temp, setTemp] = React.useState(null);
   
   const fieldChange = (e) => {
@@ -39,7 +39,7 @@ function JoinPrompt() {
   );
 }
 
-function WelcomePrompt() {
+export function WelcomePrompt() {
   const [temp, setTemp] = React.useState(null);
   
   const fieldChange = (e) => {
@@ -70,7 +70,7 @@ function WelcomePrompt() {
   );
 }
 
-function CardPlayLocal() {
+export function CardPlayLocal() {
   return (
     <Card sx={{ maxWidth: 345}}>
       <CardMedia
@@ -94,7 +94,7 @@ function CardPlayLocal() {
   );
 }
 
-function CardPlayOnline() {
+export function CardPlayOnline() {
   return (
     <Card sx={{ maxWidth: 345}}>
       <CardMedia
@@ -118,7 +118,7 @@ function CardPlayOnline() {
   );
 }
 
-function PongAppBar() {
+export function PongAppBar() {
   const [open, setOpen] = React.useState(false);
   const [temp, setTemp] = React.useState(null);
 
@@ -186,4 +186,26 @@ function PongAppBar() {
   );
 }
 
-export {PongAppBar, CardPlayLocal, CardPlayOnline, WelcomePrompt, JoinPrompt};
+export function RoomAppBar() {
+  return (
+    <UserContext.Consumer>
+      {({name}) => (
+        <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static" >
+          <Toolbar sx={{justifyContent: 'space-between'}}>
+            <Typography variant="h4" component="div">
+              Pong 
+              <JoinRightIcon />
+            </Typography>
+            <div />
+            <Typography variant="h6" component="div">
+              {name}
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        </Box>
+      )}
+    </UserContext.Consumer>
+  );
+}
+

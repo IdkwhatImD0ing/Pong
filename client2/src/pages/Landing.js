@@ -1,12 +1,10 @@
 import * as React from 'react'
-import PropTypes from 'prop-types';
 import * as MuiComponents from '../components/MuiComponents.js'
 import { Box } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Stack } from '@mui/system';
-
-export const UserContext = React.createContext();
+import { UserContext } from '../App.js';
 
 const darkTheme = createTheme({
   palette: {
@@ -14,35 +12,33 @@ const darkTheme = createTheme({
   },
 });
 
-export function Landing(props) {
-  const [name, setName] = props.nameState;
+export function Landing() {
 
   return (
-    <div>
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <UserContext.Provider value={{name, setName}}>
-          <MuiComponents.PongAppBar />
-          <Box height={'10vh'} />
-          {name === null ? (<MuiComponents.WelcomePrompt/>) :
-          (
-            <Stack direction='column' spacing={3}>
-              <MuiComponents.JoinPrompt />
-
-              <Box sx={{ display:'flex', justifyContent:'space-between'}}>
-                <div/>
-                    <MuiComponents.CardPlayLocal />
-                    <MuiComponents.CardPlayOnline />
-                <div/>
-              </Box>
-            </Stack>
-          )}
-        </UserContext.Provider>
-      </ThemeProvider>
-    </div>
+    <UserContext.Consumer>
+    {({name}) => (
+        <div>
+        <ThemeProvider theme={darkTheme}>
+          <CssBaseline />
+            <MuiComponents.PongAppBar />
+            <Box height={'10vh'} />
+            {name === null ? (<MuiComponents.WelcomePrompt/>) :
+            (
+              <Stack direction='column' spacing={3}>
+                <MuiComponents.JoinPrompt />
+  
+                <Box sx={{ display:'flex', justifyContent:'space-between'}}>
+                  <div/>
+                      <MuiComponents.CardPlayLocal />
+                      <MuiComponents.CardPlayOnline />
+                  <div/>
+                </Box>
+              </Stack>
+            )}
+        </ThemeProvider>
+      </div>
+    )}
+    </UserContext.Consumer>
   );
 }
 
-Landing.propTypes = {
-    nameState: PropTypes.array,
-}
