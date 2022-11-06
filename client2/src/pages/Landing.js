@@ -1,10 +1,10 @@
-import * as React from 'react'
-import * as MuiComponents from '../components/MuiComponents.js'
-import { Box } from '@mui/material'
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import * as React from 'react';
+import * as MuiComponents from '../components/MuiComponents.js';
+import {Box} from '@mui/material';
+import {ThemeProvider, createTheme} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Stack } from '@mui/system';
-import { UserContext } from '../App.js';
+import {Stack} from '@mui/system';
+import {UserContext} from '../App.js';
 
 const darkTheme = createTheme({
   palette: {
@@ -13,32 +13,31 @@ const darkTheme = createTheme({
 });
 
 export function Landing() {
-
   return (
     <UserContext.Consumer>
-    {({name}) => (
+      {({name}) => (
         <div>
-        <ThemeProvider theme={darkTheme}>
-          <CssBaseline />
+          <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
             <MuiComponents.PongAppBar />
             <Box height={'10vh'} />
-            {name === null ? (<MuiComponents.WelcomePrompt/>) :
-            (
-              <Stack direction='column' spacing={3}>
+            {name === 'Guest' ? (
+              <MuiComponents.WelcomePrompt />
+            ) : (
+              <Stack direction="column" spacing={3}>
                 <MuiComponents.JoinPrompt />
-  
-                <Box sx={{ display:'flex', justifyContent:'space-between'}}>
-                  <div/>
-                      <MuiComponents.CardPlayLocal />
-                      <MuiComponents.CardPlayOnline />
-                  <div/>
+
+                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                  <div />
+                  <MuiComponents.CardPlayLocal />
+                  <MuiComponents.CardPlayOnline />
+                  <div />
                 </Box>
               </Stack>
             )}
-        </ThemeProvider>
-      </div>
-    )}
+          </ThemeProvider>
+        </div>
+      )}
     </UserContext.Consumer>
   );
 }
-

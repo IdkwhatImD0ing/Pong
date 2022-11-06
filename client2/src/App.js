@@ -21,7 +21,7 @@ function App() {
       ).toString(36)
     );
   }
-  const [name, setName] = React.useState(null);
+  const [name, setName] = React.useState('Guest');
   const [userId, setUserId] = React.useState(genId());
 
   return (
@@ -30,7 +30,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/game" element={<Game />} />
-          <Route path="/multi" element={<Lobby />} />
+          <Route
+            path="/multi"
+            element={<Lobby setName={setName} setUserId={setUserId} />}
+          />
         </Routes>
       </UserContext.Provider>
     </div>
