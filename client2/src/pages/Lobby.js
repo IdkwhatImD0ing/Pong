@@ -17,7 +17,7 @@ export function Lobby() {
   ]
 
   function valuetext(value) {
-    return `${value}°C`;
+    return String(value);
   }
   return (
     <div>
