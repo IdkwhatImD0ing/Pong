@@ -137,7 +137,7 @@ function CardPlayOnline() {
   const navigate = useNavigate();
   const createGame = () => {
     setLoading(true);
-    fetch('localhost:3001/createVersusChannel')
+    fetch('http://localhost:3001/createGame')
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
@@ -161,7 +161,14 @@ function CardPlayOnline() {
         </Typography>
       </CardContent>
       <CardActions sx={{display: 'flex', justifyContent: 'center'}}>
-        <Button size="small">Create Game</Button>
+        <Button
+          size="small"
+          onClick={() => {
+            createGame();
+          }}
+        >
+          Create Game
+        </Button>
       </CardActions>
     </Card>
   );

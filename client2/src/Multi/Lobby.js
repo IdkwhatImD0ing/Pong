@@ -24,9 +24,13 @@ export default function Lobby(props) {
   const stateRef = useRef(state);
   stateRef.current = state;
 
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
+
   //Tells the server the player has left the channel
   useBeforeunload(() => {
-    fetch('localhost:3001/leaveChannel', {
+    fetch('http://localhost:3001/leaveChannel', {
       headers: {channelId: channelId},
       keepalive: true,
     }).then((res) => res.json());
@@ -34,7 +38,7 @@ export default function Lobby(props) {
 
   useEffect(() => {
     if (name) {
-      fetch('localhost:3000/joingame', {
+      fetch('http://localhost:3001/joingame', {
         headers: {name: name, id: playerId, channelId: channelId},
       })
         .then((res) => res.json())
@@ -52,7 +56,7 @@ export default function Lobby(props) {
   }, []);
 
   function onclick() {
-    fetch('localhost:3001/ready', {
+    fetch('http://localhost:3001/ready', {
       headers: {name: name, id: playerId, channelId: channelId},
     }).then((res) => res.json());
   }
@@ -104,7 +108,7 @@ export default function Lobby(props) {
     );
   }
 
-  if (!state.gameStarted) {
+  if (state && !state.gameStarted) {
     return (
       <>
         <Box
