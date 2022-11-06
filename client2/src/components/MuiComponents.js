@@ -1,14 +1,30 @@
 import * as React from 'react';
-import {AppBar, Box, Toolbar, Typography, Button, Card, CardActions, CardContent, CardMedia, TextField, Stack, Popper, Fade} from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  TextField,
+  Stack,
+  Popper,
+  Fade,
+} from '@mui/material';
 import JoinRightIcon from '@mui/icons-material/JoinRight';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import {useNavigate} from 'react-router-dom';
+
 import CheckIcon from '@mui/icons-material/Check';
 
 import { UserContext } from '../pages/Landing.js';
 
 function JoinPrompt() {
   const [temp, setTemp] = React.useState(null);
-  
+
   const fieldChange = (e) => {
     e.preventDefault();
     setTemp(e.target.value);
@@ -41,25 +57,33 @@ function JoinPrompt() {
 
 function WelcomePrompt() {
   const [temp, setTemp] = React.useState(null);
-  
+
   const fieldChange = (e) => {
     e.preventDefault();
     setTemp(e.target.value);
-  }
+  };
 
   return (
     <UserContext.Consumer>
       {({setName}) => (
-        <Stack 
-        direction='column'
-        justifyContent='center' 
-        alignItems='center'
-        spacing={2}>
-          <Typography variant='h4'> Welcome to Pong! </Typography>
+        <Stack
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
+        >
+          <Typography variant="h4"> Welcome to Pong! </Typography>
           <Stack direction={'row'}>
-            <TextField label="Enter username" variant="outlined"
-            onChange={fieldChange}/>
-            <Button onClick={() => {setName(temp)}}>
+            <TextField
+              label="Enter username"
+              variant="outlined"
+              onChange={fieldChange}
+            />
+            <Button
+              onClick={() => {
+                setName(temp);
+              }}
+            >
               Done
               <CheckIcon />
             </Button>
@@ -71,8 +95,9 @@ function WelcomePrompt() {
 }
 
 function CardPlayLocal() {
+  const navigate = useNavigate();
   return (
-    <Card sx={{ maxWidth: 345}}>
+    <Card sx={{maxWidth: 345}}>
       <CardMedia
         component="img"
         height="140"
@@ -88,7 +113,14 @@ function CardPlayLocal() {
         </Typography>
       </CardContent>
       <CardActions sx={{display: 'flex', justifyContent: 'center'}}>
-        <Button size="small">Create Game</Button>
+        <Button
+          size="small"
+          onClick={() => {
+            navigate('/game');
+          }}
+        >
+          Create Game
+        </Button>
       </CardActions>
     </Card>
   );
@@ -96,11 +128,11 @@ function CardPlayLocal() {
 
 function CardPlayOnline() {
   return (
-    <Card sx={{ maxWidth: 345}}>
+    <Card sx={{maxWidth: 345}}>
       <CardMedia
         component="img"
         height="140"
-        image='https://media.istockphoto.com/id/1332002332/photo/global-communication-network.jpg?s=612x612&w=0&k=20&c=peu8U_wCmrnpQDfPHdZL7UGCY3oapnSBPvKi9kVCh7w='
+        image="https://media.istockphoto.com/id/1332002332/photo/global-communication-network.jpg?s=612x612&w=0&k=20&c=peu8U_wCmrnpQDfPHdZL7UGCY3oapnSBPvKi9kVCh7w="
         alt="playing with people online"
       />
       <CardContent>
@@ -126,11 +158,11 @@ function PongAppBar() {
 
   const toggleOpen = () => {
     setOpen(open ? false : true);
-  }
+  };
   const fieldChange = (e) => {
     e.preventDefault();
     setTemp(e.target.value);
-  }
+  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   React.useEffect(() => {
@@ -140,46 +172,58 @@ function PongAppBar() {
   return (
     <UserContext.Consumer>
       {({name, setName}) => (
-        <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" >
-          <Toolbar sx={{justifyContent: 'space-between'}}>
-            <Typography variant="h4" component="div">
-              Pong 
-              <JoinRightIcon />
-            </Typography>
-            <div />
-            <Button color="inherit" ref={divRef}
-            onClick={toggleOpen}
-            sx={{textTransform: 'none'}}>
-              <Typography variant="h6" component="div">
-                {name}
+        <Box sx={{flexGrow: 1}}>
+          <AppBar position="static">
+            <Toolbar sx={{justifyContent: 'space-between'}}>
+              <Typography variant="h4" component="div">
+                Pong
+                <JoinRightIcon />
               </Typography>
-            </Button>
-            {/* Popper here to change name */}
-            <Popper placement='bottom' anchorEl={anchorEl} open={open} transition>
-              {({ TransitionProps }) => (
-                <Fade {...TransitionProps}>
-                  <Box sx={{bgcolor: 'background.paper'}}>
-                    <Stack direction={'row'}>
-                      <TextField label="Change username" variant="outlined"
-                      onChange={fieldChange}/>
-                      <Button onClick={() => {
-                          if (temp) {
-                            setName(temp);
-                          }
-                          toggleOpen();
-                        }
-                      }>
-                        Done
-                        <CheckIcon />
-                      </Button>
-                    </Stack>
-                  </Box>
-                </Fade>
-              )}
-            </Popper>
-          </Toolbar>
-        </AppBar>
+              <div />
+              <Button
+                color="inherit"
+                ref={divRef}
+                onClick={toggleOpen}
+                sx={{textTransform: 'none'}}
+              >
+                <Typography variant="h6" component="div">
+                  {name}
+                </Typography>
+              </Button>
+              {/* Popper here to change name */}
+              <Popper
+                placement="bottom"
+                anchorEl={anchorEl}
+                open={open}
+                transition
+              >
+                {({TransitionProps}) => (
+                  <Fade {...TransitionProps}>
+                    <Box sx={{bgcolor: 'background.paper'}}>
+                      <Stack direction={'row'}>
+                        <TextField
+                          label="Change username"
+                          variant="outlined"
+                          onChange={fieldChange}
+                        />
+                        <Button
+                          onClick={() => {
+                            if (temp) {
+                              setName(temp);
+                            }
+                            toggleOpen();
+                          }}
+                        >
+                          Done
+                          <CheckIcon />
+                        </Button>
+                      </Stack>
+                    </Box>
+                  </Fade>
+                )}
+              </Popper>
+            </Toolbar>
+          </AppBar>
         </Box>
       )}
     </UserContext.Consumer>
