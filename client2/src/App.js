@@ -1,7 +1,8 @@
 import * as React from 'react';
 import './App.css';
 import {Routes, Route} from 'react-router-dom';
-import {Landing} from './pages/Landing';
+// import {Landing} from './pages/Landing';
+import {Lobby} from './pages/Lobby';
 
 export const UserContext = React.createContext();
 
@@ -13,7 +14,7 @@ function App() {
       .toString(36)
     );
   }
-  const [name, setName] = React.useState(null);
+  const [name, setName] = React.useState();
   const [userId, setUserId] = React.useState(genId());
 
   return (
@@ -21,7 +22,7 @@ function App() {
       <UserContext.Provider value={{name, setName, userId, setUserId}}>
       <Routes>
         <Route path="/" element={
-          <Landing/>
+          <Lobby/>
         } />
       </Routes>
       </UserContext.Provider>

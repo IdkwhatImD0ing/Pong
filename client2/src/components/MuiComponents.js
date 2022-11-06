@@ -2,7 +2,7 @@ import * as React from 'react';
 import {AppBar, Box, Toolbar, Typography, Button, Card, CardActions, CardContent, CardMedia, TextField, Stack, Popper, Fade} from '@mui/material';
 import JoinRightIcon from '@mui/icons-material/JoinRight';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import {useNavigate} from 'react-router-dom';
+// import {useNavigate} from 'react-router-dom';
 
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -201,7 +201,7 @@ export function RoomAppBar() {
             </Typography>
             <div />
             <Typography variant="h6" component="div">
-              {name}
+              {name ? name : 'username'}
             </Typography>
           </Toolbar>
         </AppBar>

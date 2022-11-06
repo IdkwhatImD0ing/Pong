@@ -9,7 +9,7 @@ const darkTheme = createTheme({
   },
 });
 
-export function Lobby(props) {
+export function Lobby() {
   return (
     <div>
       <ThemeProvider theme={darkTheme}>
