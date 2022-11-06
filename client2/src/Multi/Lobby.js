@@ -14,8 +14,11 @@ export default function Lobby(props) {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const name = 'Bill'; //TODO: Remove testing name and id
+  const playerId = 'testid';
   //console.log(params.get("channelId"));
   const channelId = params.get('channelId');
+  const [gameNotFound, setGameNotFound] = useState(false);
 
   const {state} = useReadChannelState(channelId);
   const stateRef = useRef(state);
@@ -29,11 +32,52 @@ export default function Lobby(props) {
     }).then((res) => res.json());
   });
 
+  useEffect(() => {
+    if (name) {
+      fetch('localhost:3000/joingame', {
+        headers: {name: name, id: playerId, channelId: channelId},
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setLoading(false);
+          if (data.response < 0) {
+            setGameNotFound(true);
+          }
+        });
+    }
+    window.addEventListener('keydown', keyInput);
+    return () => {
+      window.removeEventListener('keydown', keyInput);
+    };
+  }, []);
+
   function onclick() {
     fetch('localhost:3001/ready', {
       headers: {name: name, id: playerId, channelId: channelId},
     }).then((res) => res.json());
   }
+
+  let keyInput = (event) => {
+    const {keyCode} = event;
+    if (!stateRef) {
+      return;
+    }
+    if (
+      (stateRef.current.gameStarted &&
+        !stateRef.current.gameEnded &&
+        stateRef.current.playerOneId === playerId) ||
+      stateRef.current.playerTwoId === playerId
+    ) {
+      fetch('https://tetrius.hop.sh/keypress', {
+        headers: {
+          keyCode: keyCode,
+          name: name.current,
+          id: playerId.current,
+          channelId: channelId,
+        },
+      }).then((res) => res.json());
+    }
+  };
 
   if (loading) {
     return (
