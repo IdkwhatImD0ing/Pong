@@ -20,7 +20,7 @@ function App() {
       .toString(36)
     );
   }
-  const [name, setName] = React.useState(null);
+  const [name, setName] = React.useState();
   const [userId, setUserId] = React.useState(genId());
 
   return (
