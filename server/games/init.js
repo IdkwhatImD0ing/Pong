@@ -4,7 +4,7 @@ function getInitialState() {
   const borderOffset = 5;
   const diameter = 20;
   const windowHeight = 600;
-  const windowWidth = 1500;
+  const windowWidth = 1300;
 
   const intialState = {
     //Multiplayer states
