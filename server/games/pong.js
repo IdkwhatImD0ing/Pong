@@ -226,10 +226,10 @@ class Pong {
     if (keyCode == SPACEBAR) {
       // space
       this.state.started = true;
-      if (this.state.leftServe) {
+      if (this.state.leftServe && playerId == this.state.playerLeft) {
         this.state.xBallSpeed = Math.abs(this.state.xBallSpeed);
       }
-      if (this.state.rightServe) {
+      if (this.state.rightServe && playerId == this.state.playerRight) {
         this.state.xBallSpeed = Math.abs(this.state.xBallSpeed) * -1;
       }
       this.state.leftServe = false;
